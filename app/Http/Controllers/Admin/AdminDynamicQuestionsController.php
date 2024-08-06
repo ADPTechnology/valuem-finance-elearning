@@ -1,0 +1,176 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\{Course, DynamicQuestion, Exam, QuestionType};
+use App\Services\DynamicQuestionService;
+use Exception;
+use Illuminate\Http\Request;
+
+class AdminDynamicQuestionsController extends Controller
+{
+    private $dynamicQuestionService;
+
+    public function __construct(DynamicQuestionService $service)
+    {
+        $this->dynamicQuestionService = $service;
+    }
+
+    public function index(Request $request, Exam $exam)
+    {
+        if ($request->ajax()) {
+            return $this->dynamicQuestionService->getDataTable($exam->id);
+        }
+
+        $courses = Course::where('active', 'S')
+        ->whereIn('course_type', ['REGULAR', 'LIVEFREECOURSE'])
+        ->orderBy('id', 'desc')
+        ->get(['id', 'description', 'course_type']);
+
+        $regularCourses = $courses->where('course_type', 'REGULAR');
+        $freeliveCourses = $courses->where('course_type', 'LIVEFREECOURSE');
+
+        $exam->loadRelationships();
+        $questionTypes = QuestionType::get(['id', 'description']);
+
+        return view('admin.exams.questions.index', compact(
+            'exam',
+            'regularCourses',
+            'freeliveCourses',
+            'questionTypes'
+        ));
+    }
+
+    public function show(DynamicQuestion $question)
+    {
+        $question->loadRelationships();
+        $questionType_id = $question->question_type_id;
+
+        return view('admin.exams.questions.show', compact(
+            'question',
+            'questionType_id'
+        ));
+    }
+
+    public function getQuestionType(Request $request)
+    {
+        $html = NULL;
+        $success = true;
+        $message = NULL;
+
+        try {
+            $html = $this->dynamicQuestionService->getQuestionTypeView(null, $request['value']);
+        } catch (Exception $e) {
+            $success = false;
+            $message = $e->getMessage();
+        }
+
+        return response()->json([
+            "success" => $success,
+            "messsage" => $message,
+            "html" => $html,
+        ]);
+    }
+
+    public function store(Request $request, Exam $exam)
+    {
+        $success = true;
+        $html = null;
+        $htmlQuestion = null;
+
+        $storage = env('FILESYSTEM_DRIVER');
+
+        try {
+            $question = $this->dynamicQuestionService->store($request, $exam, $storage);
+
+            $exam->loadRelationships();
+            $html = view('admin.exams.partials.exam-box', compact('exam'))->render();
+            $htmlQuestion = $this->dynamicQuestionService->getQuestionTypeView(null, $question->question_type_id);
+            $message = config('parameters.stored_message');
+        } catch (Exception $e) {
+            $success = false;
+            $message = $e->getMessage();
+        }
+
+        return response()->json([
+            "success" => $success,
+            "message" => $message,
+            "data_show" => [
+                "html" => $html,
+                "htmlQuestion" => $htmlQuestion
+            ]
+        ]);
+    }
+
+    public function update(Request $request, DynamicQuestion $question)
+    {
+        $question->loadRelationships();
+
+        $success = true;
+        $html = null;
+
+        $storage = env('FILESYSTEM_DRIVER');
+
+        try{
+            $question = $this->dynamicQuestionService->update($request, $question, $storage);
+
+            $question->loadRelationships();
+            $html = $this->dynamicQuestionService->getQuestionTypeView($question, $question->question_type_id);
+            $message = config('parameters.updated_message');
+        }
+        catch (Exception $e) {
+            $success = false;
+            $message = $e->getMessage();
+        }
+
+        return response()->json([
+            "success" => $success,
+            "message" => $message,
+            "html" => $html,
+            "statement" => $question->statement
+        ]);
+    }
+
+    public function destroy(Request $request, DynamicQuestion $question)
+    {
+        $question->loadRelationships();
+        $exam = $question->exam;
+
+        $success = true;
+        $route = null;
+        $html = null;
+
+        $storage = env('FILESYSTEM_DRIVER');
+
+        if ($question->evaluations_count == 0) {
+
+            try{
+                $this->dynamicQuestionService->destroy($question, $storage);
+
+                $exam->loadRelationships();
+                $html = view('admin.exams.partials.exam-box', compact('exam'))->render();
+                $message = config('parameters.deleted_message');
+            }
+            catch (Exception $e) {
+                $success = false;
+                $message = $e->getMessage();
+            }
+
+        } else {
+            $success = false;
+            $message = config('parameters.exception_message');
+        }
+
+        if($request->has('place')){
+            $route = route('admin.exams.showQuestions', $exam);
+        }
+
+        return response()->json([
+            "success" => $success,
+            "message" => $message,
+            "route" => $route,
+            "html" => $html
+        ]);
+    }
+}

@@ -1,0 +1,236 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\{Course, CourseSection, FreecourseEvaluation};
+use App\Services\{CourseSectionService, FreeCourseService};
+use Exception;
+
+class AdminCourseSectionsController extends Controller
+{
+    private $courseSectionService;
+
+    public function __construct(CourseSectionService $service)
+    {
+        $this->courseSectionService = $service;
+    }
+
+    public function store(Request $request, Course $course)
+    {
+        parse_str($request['form'], $form);
+
+        $success = true;
+        $htmlCourse = null;
+        $htmlCourse = null;
+
+        try {
+            $this->courseSectionService->store($form, $course);
+            $message = config('parameters.stored_message');
+        } catch (Exception $e) {
+            $success = false;
+            $message = $e->getMessage();
+        }
+
+        if ($success) {
+            $course->loadFreeCourseRelationships();
+            $sectionActive = getActiveSection($request['id']);
+
+            $htmlCourse = view('admin.free-courses.partials.course-box', compact('course'))->render();
+            $htmlSection = view('admin.free-courses.partials.sections-list', compact('course', 'sectionActive'))->render();
+        }
+
+        return response()->json([
+            "success" => $success,
+            "message" => $message,
+            "htmlCourse" => $htmlCourse,
+            "htmlSection" => $htmlSection
+        ]);
+    }
+
+    public function edit(CourseSection $section)
+    {
+        $sections = CourseSection::where('course_id', $section->course_id)
+            ->orderBy('section_order', 'ASC')
+            ->get(['id', 'section_order', 'course_id']);
+
+        return response()->json([
+            "title" => $section->title,
+            "sections" => $sections,
+            'order' => $section->section_order
+        ]);
+    }
+
+    public function updateOrder(Request $request, CourseSection $section)
+    {
+        $order = $request['value'];
+
+        $this->courseSectionService->updateOrder($order, $section);
+
+        $course = $section->course->loadFreeCourseRelationships();
+
+        $sectionActive = getActiveSection($request['id']);
+        $html = view('admin.free-courses.partials.sections-list', compact('course', 'sectionActive'))->render();
+
+        return response()->json([
+            "html" => $html
+        ]);
+    }
+
+    public function update(Request $request, CourseSection $section)
+    {
+        parse_str($request['form'], $form);
+
+        $success = true;
+        $sectionActive = null;
+        $htmlSection = null;
+
+        try {
+            $this->courseSectionService->update($form, $section);
+            $message = config('parameters.updated_message');
+        } catch (Exception $e) {
+            $success = false;
+            $message = $e->getMessage();
+        }
+
+        $course = $section->course->loadFreeCourseRelationships();
+
+        $sectionActive = getActiveSection($request['id']);
+
+        $htmlSection = view('admin.free-courses.partials.sections-list', compact('course', 'sectionActive'))->render();
+
+        return response()->json([
+            "success" => $success,
+            "message" => $message,
+            "htmlSection" => $htmlSection,
+            "active" => $sectionActive,
+            "id" => $section->id,
+            "title" => $section->title
+        ]);
+    }
+
+    public function getExam(CourseSection $section)
+    {
+        $section->load('course');
+
+        $fcEvaluation = $section->fcEvaluations->first();
+
+
+        if ($fcEvaluation) {
+            $fcEvaluation->load('exam');
+            $fcEvaluation->loadCount('userFcEvaluations');
+        }
+
+        $html = view('admin.free-courses.partials.relation-exam', compact('section', 'fcEvaluation'))->render();
+
+        return response()->json([
+            "html" => $html,
+            "haveExam" => $fcEvaluation ? true : false
+        ]);
+    }
+
+    public function relationExam(CourseSection $section, Request $request)
+    {
+        $success = true;
+        $message = null;
+        $html = null;
+
+        try {
+            $this->courseSectionService->relationExam($section, $request);
+            $message = config('parameters.stored_message');
+        } catch (Exception $e) {
+            $success = false;
+            $message = $e->getMessage();
+        }
+
+        $fcEvaluation = $section->fcEvaluations->first();
+
+        if ($fcEvaluation) {
+            $fcEvaluation->load('exam');
+        }
+
+        $html = view('admin.free-courses.partials.relation-exam', compact('section', 'fcEvaluation'))->render();
+
+        return response()->json([
+            "success" => $success,
+            "message" => $message,
+            "html" => $html,
+            "haveExam" => $fcEvaluation ? true : false
+
+        ]);
+    }
+
+    public function destroyEvaluation(FreecourseEvaluation $fcEvaluation)
+    {
+        $success = true;
+        $message = null;
+        $html = null;
+
+        $section = $fcEvaluation->courseSection;
+
+        try {
+            $fcEvaluation->delete();
+            $message = config('parameters.deleted_message');
+        } catch (Exception $e) {
+            $success = false;
+            $message = $e->getMessage();
+        }
+
+        $fcEvaluation = $section->fcEvaluations()->first();
+
+        if ($fcEvaluation) {
+            $fcEvaluation->load('exam');
+        }
+
+        $html = view('admin.free-courses.partials.relation-exam', compact('section', 'fcEvaluation'))->render();
+
+        return response()->json([
+            "success" => $success,
+            "message" => $message,
+            "html" => $html,
+            "haveExam" => $fcEvaluation ? true : false
+        ]);
+    }
+
+
+    public function destroy(Request $request, CourseSection $section)
+    {
+        $course_id = $section->course_id;
+
+        $success = true;
+        $is_active = 0;
+        $htmlChapter = '';
+
+        try {
+            $this->courseSectionService->destroy($section);
+            $message = config('parameters.deleted_message');
+        } catch (Exception $e) {
+            $success = false;
+            $message = $e->getMessage();
+        }
+
+        $course = app(FreeCourseService::class)->withFreeCourseRelationshipsQuery()
+            ->where('id', $course_id)
+            ->first();
+
+        $sectionActive = getActiveSection($request['id']);
+
+        $htmlCourse = view('admin.free-courses.partials.course-box', compact('course'))->render();
+        $htmlSection = view('admin.free-courses.partials.sections-list', compact('course', 'sectionActive'))->render();
+
+        if ($request['active'] == 'active') {
+            $htmlChapter  = view('admin.free-courses.partials.chapter-list-empty')->render();
+            $is_active = 1;
+        }
+
+        return response()->json([
+            "success" => $success,
+            "message" => $message,
+            "htmlCourse" => $htmlCourse,
+            "htmlSection" => $htmlSection,
+            "is_active" => $is_active,
+            "htmlChapter" => $htmlChapter
+        ]);
+    }
+}
