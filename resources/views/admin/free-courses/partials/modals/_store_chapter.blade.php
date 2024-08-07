@@ -40,12 +40,12 @@
 
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <label>Video * (Max: 150MB)</label>
+                            <label>Video (opcional) (Max: 150MB)</label>
                             <div class="input-group dropzone" id="input-chapter-video-container">
-                                <div class="message-file-invalid">
+                                {{-- <div class="message-file-invalid">
                                     <i class="fa-solid fa-circle-exclamation fa-bounce"></i> &nbsp;
                                     Este campo es obligatorio
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

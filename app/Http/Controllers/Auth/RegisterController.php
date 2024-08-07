@@ -30,7 +30,7 @@ class RegisterController extends Controller
 
     public function validateDni(Request $request)
     {
-        $valid = User::where('dni', $request['dni'])->first() == null ? "true" : "false";
+        $valid = User::where('email', $request['email'])->first() == null ? "true" : "false";
 
         return $valid;
     }

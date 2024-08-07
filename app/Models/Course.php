@@ -42,21 +42,10 @@ class Course extends Model
         return $this->hasMany(Folder::class, 'id_course', 'id');
     }
 
-    public function type()
-    {
-        return $this->belongsTo(CourseType::class, 'course_type_id', 'id');
-    }
-
     public function exams()
     {
         return $this->hasMany(Exam::class, 'course_id', 'id');
     }
-
-    public function events()
-    {
-        return $this->hasManyThrough(Event::class, Exam::class, 'course_id', 'exam_id');
-    }
-
 
     public function courseCategory()
     {
@@ -71,17 +60,6 @@ class Course extends Model
     public function courseChapters()
     {
         return $this->hasManyThrough(SectionChapter::class, CourseSection::class, 'course_id', 'section_id');
-    }
-
-    public function courseCertifications()
-    {
-        return $this->hasManyDeep(Certification::class, [Exam::class, Event::class])
-            ->withIntermediate(Event::class, ['id', 'exam_id', 'user_id', 'description', 'date', 'min_score']);
-    }
-
-    public function forgettingCurves()
-    {
-        return $this->belongsToMany(ForgettingCurve::class, 'fc_courses', 'course_id', 'fcurve_id')->withTimestamps();
     }
 
     public function files()

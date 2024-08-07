@@ -26,16 +26,6 @@ class Evaluation extends Model
     ];
 
 
-    public function certification()
-    {
-        return $this->belongsTo(Certification::class, 'certification_id', 'id');
-    }
-
-    public function fcStepProgress()
-    {
-        return $this->belongsTo(FcStepProgress::class, 'f_curve_step_progress_id');
-    }
-
     public function userFcEvaluation()
     {
         return $this->belongsTo(UserFcEvaluation::class, 'user_fc_evaluation_id');

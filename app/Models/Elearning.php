@@ -11,8 +11,5 @@ class Elearning extends Model
 
     protected $table = 'e_learnings';
 
-    public function events()
-    {
-        return $this -> hasMany(Event::class, 'elearning_id', 'id');
-    }
+
 }

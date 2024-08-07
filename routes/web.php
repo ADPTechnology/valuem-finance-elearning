@@ -30,10 +30,8 @@ use App\Http\Controllers\Admin\{
     SpecCourseController,
     SpecCourseEventsController,
     AdminSliderImageController,
-    GroupEventController,
     SpecCourseGroupEventsController,
     GroupParticipantController,
-    GroupEventModuleController,
     TestController,
     AssignmentController,
     ForgettingCurveController,
@@ -169,12 +167,12 @@ Route::controller(HomeFreeCourseController::class)->group(function () {
 });
 
 
-Route::group(['middleware' => 'check.external.user'], function () {
-    Route::controller(HomeWebinarController::class)->group(function () {
-        Route::get('/webinars', 'index')->name('home.webinar.index');
-        Route::get('/webinars/{webinar}', 'show')->name('home.webinar.show');
-    });
-});
+// Route::group(['middleware' => 'check.external.user'], function () {
+//     Route::controller(HomeWebinarController::class)->group(function () {
+//         Route::get('/webinars', 'index')->name('home.webinar.index');
+//         Route::get('/webinars/{webinar}', 'show')->name('home.webinar.show');
+//     });
+// });
 
 
 Route::controller(HomeAboutController::class)->group(function () {
@@ -193,39 +191,47 @@ Route::controller(HomeCertificationController::class)->group(function () {
 Auth::routes(['register' => false]);
 
 
+
+
+
+
 // --------------- CERTIFICATION -----------------
 // ------ certifications.*
-Route::group(['prefix' => 'certificados', 'as' => 'certifications.'], function () {
 
-    Route::controller(CertificateController::class)->group(function () {
+// Route::group(['prefix' => 'certificados', 'as' => 'certifications.'], function () {
 
-        Route::get('/', 'index')->name('index');
-    });
-});
+//     Route::controller(CertificateController::class)->group(function () {
 
-Route::group(['prefix' => 'pdf', 'as' => 'pdf.'], function () {
+//         Route::get('/', 'index')->name('index');
+//     });
+// });
 
-    // ------ pdf.*
-    Route::controller(PdfCertificationController::class)->group(function () {
+// Route::group(['prefix' => 'pdf', 'as' => 'pdf.'], function () {
 
-        Route::get('/exportar-certificado/{certification}', 'certificationPdf')->name('export.certification');
-        Route::get('/exportar-compromiso/{certification}/unidad-minera/{miningUnit}', 'commitmentPdf')->name('export.commitment');
-        Route::get('/exportar-certificado-externo/{certification}', 'extCertificationPdf')->name('export.ext_certification');
-        Route::get('/exportar-certificado-webinar/{certification}', 'webCertificationPdf')->name('export.web_certification');
-        Route::get('/descargar-archivo/{file}', 'downloadFile')->name('download.file');
-        Route::get('/generar-pdf-evaluación-de-participante/{certification}', 'examPdf')->name('examForParticipant');
+//     // ------ pdf.*
+//     Route::controller(PdfCertificationController::class)->group(function () {
 
-        //* ----------- CURSOS LIBRES -------------
-        Route::get('/exportar-certificado-curso-libre/{certification}', 'freecourseCertificationPdf')->name('export.freecoursecertification');
-    });
-});
+//         Route::get('/exportar-certificado/{certification}', 'certificationPdf')->name('export.certification');
+//         Route::get('/exportar-compromiso/{certification}/unidad-minera/{miningUnit}', 'commitmentPdf')->name('export.commitment');
+//         Route::get('/exportar-certificado-externo/{certification}', 'extCertificationPdf')->name('export.ext_certification');
+//         Route::get('/exportar-certificado-webinar/{certification}', 'webCertificationPdf')->name('export.web_certification');
+//         Route::get('/descargar-archivo/{file}', 'downloadFile')->name('download.file');
+//         Route::get('/generar-pdf-evaluación-de-participante/{certification}', 'examPdf')->name('examForParticipant');
+
+//         //* ----------- CURSOS LIBRES -------------
+//         Route::get('/exportar-certificado-curso-libre/{certification}', 'freecourseCertificationPdf')->name('export.freecoursecertification');
+//     });
+// });
+
+
+
 
 Route::group(['middleware' => ['auth', 'check.valid.user']], function () {
 
     // RUTAS DE LA INTERFAZ ADMINISTRADOR ------------------
 
     Route::group([
-        'middleware' => 'check.role:admin,super_admin,technical_support',
+        'middleware' => 'check.role:admin,super_admin',
         'prefix' => 'admin',
         'as' => 'admin.'
     ], function () {
@@ -264,8 +270,6 @@ Route::group(['middleware' => ['auth', 'check.valid.user']], function () {
                 });
             });
 
-
-
             // --------------- USERS -------------------------
 
             Route::group(['prefix' => 'usuarios'], function () {
@@ -273,7 +277,6 @@ Route::group(['middleware' => ['auth', 'check.valid.user']], function () {
                 Route::controller(AdminUsersController::class)->group(function () {
 
                     Route::get('/', 'index')->name('users.index');
-                    Route::get('/registrar/obtener-empresas', 'registerGetCompanies')->name('users.registerGetCompanies');
                     Route::get('/editar/{user}', 'edit')->name('user.edit');
                     Route::get('/descargar-documento/{file}', 'downloadDocument')->name('participant.downloadDocument');
                     Route::get('/obtener-contenido-de-documentos/{participant}', 'getDocsContent')->name('participant.getDocsContent');
@@ -282,8 +285,8 @@ Route::group(['middleware' => ['auth', 'check.valid.user']], function () {
                     Route::post('/actualizar-información-del-instructor/{instructor}', 'updateInstructorInformation')->name('instructor.information.update');
 
                     Route::post('/registrar-documento/{participant}', 'publishDocsForParticipant')->name('participant.publishDocForParticipant');
-                    Route::post('/registrar/validar-dni', 'registerValidateDni')->name('users.validateDni');
-                    Route::post('/editar/validar-dni', 'editValidateDni')->name('user.editValidateDni');
+                    Route::post('/registrar/validar-email', 'registerValidateEmail')->name('users.validateEmail');
+                    Route::post('/editar/validar-email', 'editValidateEmail')->name('user.editValidateEmail');
                     Route::post('/registrar', 'store')->name('user.store');
                     Route::post('/actualizar/{user}', 'update')->name('user.update');
                     Route::delete('/eliminar/{user}', 'destroy')->name('user.delete');
@@ -1035,25 +1038,25 @@ Route::group(['middleware' => ['auth', 'check.valid.user']], function () {
 
         // ----------- CERTIFICATIONS MODULE ------------
 
-        Route::group(['prefix' => 'certificados'], function () {
+        // Route::group(['prefix' => 'certificados'], function () {
 
-            Route::controller(AdminCertificationsController::class)->group(function () {
+        //     Route::controller(AdminCertificationsController::class)->group(function () {
 
-                Route::get('/', 'index')->name('certifications.index');
-            });
-            // ----------------- PDFS ------------------
+        //         Route::get('/', 'index')->name('certifications.index');
+        //     });
+        //     // ----------------- PDFS ------------------
 
-            // ------ Certifications ------------
-            //-------  pdf.certification.* ----------
-            Route::group(['as' => 'pdf.certification.'], function () {
+        //     // ------ Certifications ------------
+        //     //-------  pdf.certification.* ----------
+        //     Route::group(['as' => 'pdf.certification.'], function () {
 
-                Route::controller(PdfCertificationController::class)->group(function () {
+        //         Route::controller(PdfCertificationController::class)->group(function () {
 
-                    Route::get('/generar-pdf-evaluación-de-participante/{certification}', 'examPdf')->name('exam');
-                    Route::get('/generar-pdf-anexo/{certification}/unidad-minera/{miningUnit}', 'anexoPdf')->name('anexo');
-                });
-            });
-        });
+        //             Route::get('/generar-pdf-evaluación-de-participante/{certification}', 'examPdf')->name('exam');
+        //             Route::get('/generar-pdf-anexo/{certification}/unidad-minera/{miningUnit}', 'anexoPdf')->name('anexo');
+        //         });
+        //     });
+        // });
     });
 
     // -------  RUTAS DE LA INTERFAZ AULA ---------------
@@ -1073,50 +1076,49 @@ Route::group(['middleware' => ['auth', 'check.valid.user']], function () {
                 Route::post('/actualizar-avatar/{user}', 'updateUserAvatar')->name('updateUserAvatar');
                 Route::post('/actualizar-contraseña/{user}', 'updatePassword')->name('updatePassword');
 
-                Route::group(['middleware' => 'check.role:instructor'], function () {
-                    Route::get('/información-como-instructor', 'getInformation')->name('instructor.information.index');
-                    Route::get('/editar-información-como-instructor', 'editInformation')->name('instructor.information.edit');
-                    Route::post('/actualizar-información', 'updateInformation')->name('instructor.information.update');
-                });
+                // Route::group(['middleware' => 'check.role:instructor'], function () {
+                //     Route::get('/información-como-instructor', 'getInformation')->name('instructor.information.index');
+                //     Route::get('/editar-información-como-instructor', 'editInformation')->name('instructor.information.edit');
+                //     Route::post('/actualizar-información', 'updateInformation')->name('instructor.information.update');
+                // });
             });
         });
 
 
+        // Route::group(['middleware' => 'check.role:supervisor'], function () {
 
-        Route::group(['middleware' => 'check.role:supervisor'], function () {
-
-            // -------------- EVENTS SUPERVISOR --------------------
+        //     // -------------- EVENTS SUPERVISOR --------------------
 
 
-            Route::group(['prefix' => 'eventos', 'as' => 'supervisor.events.'], function () {
+        //     Route::group(['prefix' => 'eventos', 'as' => 'supervisor.events.'], function () {
 
-                Route::controller(SupervisorEventsController::class)->group(function () {
-                    Route::get('/', 'index')->name('index');
-                    Route::get('/ver/{event}', 'show')->name('show');
-                    Route::get('/ver-certificado/{certification}', 'showCertification')->name('showCertification');
-                });
-            });
+        //         Route::controller(SupervisorEventsController::class)->group(function () {
+        //             Route::get('/', 'index')->name('index');
+        //             Route::get('/ver/{event}', 'show')->name('show');
+        //             Route::get('/ver-certificado/{certification}', 'showCertification')->name('showCertification');
+        //         });
+        //     });
 
-            // -------------- CERTIFICATIONS SUPERVISOR --------------------
+        //     // -------------- CERTIFICATIONS SUPERVISOR --------------------
 
-            Route::group(['prefix' => 'certificaciones', 'as' => 'certification.'], function () {
+        //     Route::group(['prefix' => 'certificaciones', 'as' => 'certification.'], function () {
 
-                Route::controller(CertificationSupervisorController::class)->group(function () {
-                    Route::get('/', 'index')->name('index');
-                    Route::get('/obtener-certificaciones', 'getCertificationDocuments')->name('getCertificationDocuments');
-                });
-            });
+        //         Route::controller(CertificationSupervisorController::class)->group(function () {
+        //             Route::get('/', 'index')->name('index');
+        //             Route::get('/obtener-certificaciones', 'getCertificationDocuments')->name('getCertificationDocuments');
+        //         });
+        //     });
 
-            // -------------- KPIS SUPERVISOR --------------------
+        //     // -------------- KPIS SUPERVISOR --------------------
 
-            Route::group(['prefix' => 'indicador-clave-de-rendimiento', 'as' => 'supervisor.kpi.'], function () {
+        //     Route::group(['prefix' => 'indicador-clave-de-rendimiento', 'as' => 'supervisor.kpi.'], function () {
 
-                Route::controller(SupervisorKpiController::class)->group(function () {
-                    Route::get('/', 'index')->name('index');
-                    Route::get('/obtener-data-satisfaccion', 'getSatisfactionKpi')->name('getSatisfactionKpi');
-                });
-            });
-        });
+        //         Route::controller(SupervisorKpiController::class)->group(function () {
+        //             Route::get('/', 'index')->name('index');
+        //             Route::get('/obtener-data-satisfaccion', 'getSatisfactionKpi')->name('getSatisfactionKpi');
+        //         });
+        //     });
+        // });
 
 
         Route::group([
@@ -1650,11 +1652,11 @@ Route::group(['middleware' => ['auth', 'check.valid.user']], function () {
 
     // ---------- ACTUALIZAR ASISTENCIA -----------
 
-    Route::group(['middleware' => 'check.role:admin,super_admin,technical_support,instructor'], function () {
+    // Route::group(['middleware' => 'check.role:admin,super_admin,technical_support,instructor'], function () {
 
-        Route::controller(AdminCertificationsController::class)->group(function () {
+    //     Route::controller(AdminCertificationsController::class)->group(function () {
 
-            Route::post('/actualizar-asistencia/{certification}', 'updateAssist')->name('events.certification.updateAssist');
-        });
-    });
+    //         Route::post('/actualizar-asistencia/{certification}', 'updateAssist')->name('events.certification.updateAssist');
+    //     });
+    // });
 });

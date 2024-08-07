@@ -36,7 +36,7 @@ $(function () {
 
     /* ---- DROPDOWN BUTTON -------*/
 
-    $(".main-content").on("click", ".btn-dropdown-container", function () {
+    $("html").on("click", ".btn-dropdown-container", function () {
         if (window.matchMedia("(min-width: 992px)").matches) {
             $("#btn-drowdown-category-list").removeClass("vertical");
         } else {
@@ -113,6 +113,11 @@ $(function () {
             next();
         });
     };
+
+
+
+
+
 
     if ($("#companies-table").length) {
         var companiesTableEle = $("#companies-table");
@@ -874,687 +879,690 @@ $(function () {
         });
     }
 
-    if ($("#users-table").length) {
-        /* -------- SELECT ----------*/
 
-        $("#registerRoleSelect").select2({
-            dropdownParent: $("#RegisterUserModal"),
-            placeholder: "Selecciona un rol",
-        });
+    // if ($("#users-table").length) {
+    //     /* -------- SELECT ----------*/
 
-        $("#registerCompanySelect").select2({
-            dropdownParent: $("#RegisterUserModal"),
-            placeholder: "Selecciona una empresa",
-        });
+    //     $("#registerRoleSelect").select2({
+    //         dropdownParent: $("#RegisterUserModal"),
+    //         placeholder: "Selecciona un rol",
+    //     });
 
-        $("#registerMiningUnitsSelect").select2({
-            dropdownParent: $("#RegisterUserModal"),
-            placeholder: "Selecciona una o más unidades mineras",
-            closeOnSelect: false,
-        });
+    //     $("#registerCompanySelect").select2({
+    //         dropdownParent: $("#RegisterUserModal"),
+    //         placeholder: "Selecciona una empresa",
+    //     });
 
-        $("#editRoleSelect").select2({
-            dropdownParent: $("#EditUserModal"),
-            placeholder: "Selecciona un rol",
-        });
+    //     $("#registerMiningUnitsSelect").select2({
+    //         dropdownParent: $("#RegisterUserModal"),
+    //         placeholder: "Selecciona una o más unidades mineras",
+    //         closeOnSelect: false,
+    //     });
 
-        $("#editCompanySelect").select2({
-            dropdownParent: $("#EditUserModal"),
-            placeholder: "Selecciona una empresa",
-        });
+    //     $("#editRoleSelect").select2({
+    //         dropdownParent: $("#EditUserModal"),
+    //         placeholder: "Selecciona un rol",
+    //     });
 
-        $("#editMiningUnitsSelect").select2({
-            dropdownParent: $("#EditUserModal"),
-            placeholder: "Selecciona una o más unidades mineras",
-            closeOnSelect: false,
-        });
+    //     $("#editCompanySelect").select2({
+    //         dropdownParent: $("#EditUserModal"),
+    //         placeholder: "Selecciona una empresa",
+    //     });
 
-        /* --------------------------------*/
+    //     $("#editMiningUnitsSelect").select2({
+    //         dropdownParent: $("#EditUserModal"),
+    //         placeholder: "Selecciona una o más unidades mineras",
+    //         closeOnSelect: false,
+    //     });
 
-        var usersTableEle = $("#users-table");
-        var getDataTable = usersTableEle.data("url");
-        var usersTable = usersTableEle.DataTable({
-            responsive: true,
-            language: DataTableEs,
-            serverSide: true,
-            processing: true,
-            ajax: {
-                url: getDataTable,
-                data: function (data) {
-                    // data.from_date = $("#daterange-btn-certifications")
-                    //     .data("daterangepicker")
-                    //     .startDate.format("YYYY-MM-DD");
-                    // data.end_date = $("#daterange-btn-certifications")
-                    //     .data("daterangepicker")
-                    //     .endDate.format("YYYY-MM-DD");
-                    data.company = $("#search_from_company_select").val();
-                    data.rol = $("#search_from_rol_select").val();
-                    data.active = $("#search_from_status_select").val();
-                    data.type = $("#search_from_type_select").val();
-                },
-            },
-            columns: [
-                { data: "id", name: "id" },
-                { data: "dni", name: "dni" },
-                { data: "name", name: "name" },
-                { data: "email", name: "email" },
-                { data: "role", name: "role" },
-                { data: "company.description", name: "company.description" },
-                {
-                    data: "status-btn",
-                    name: "status-btn",
-                    orderable: false,
-                    searchable: false,
-                },
-                {
-                    data: "action",
-                    name: "action",
-                    orderable: false,
-                    searchable: false,
-                },
-            ],
-            order: [[0, "desc"]],
-        });
+    //     /* --------------------------------*/
 
-        $("html").on("change", ".select-filter-users", function () {
-            usersTable.draw();
-        });
+    //     var usersTableEle = $("#users-table");
+    //     var getDataTable = usersTableEle.data("url");
+    //     var usersTable = usersTableEle.DataTable({
+    //         responsive: true,
+    //         language: DataTableEs,
+    //         serverSide: true,
+    //         processing: true,
+    //         ajax: {
+    //             url: getDataTable,
+    //             data: function (data) {
+    //                 // data.from_date = $("#daterange-btn-certifications")
+    //                 //     .data("daterangepicker")
+    //                 //     .startDate.format("YYYY-MM-DD");
+    //                 // data.end_date = $("#daterange-btn-certifications")
+    //                 //     .data("daterangepicker")
+    //                 //     .endDate.format("YYYY-MM-DD");
+    //                 data.company = $("#search_from_company_select").val();
+    //                 data.rol = $("#search_from_rol_select").val();
+    //                 data.active = $("#search_from_status_select").val();
+    //                 data.type = $("#search_from_type_select").val();
+    //             },
+    //         },
+    //         columns: [
+    //             { data: "id", name: "id" },
+    //             { data: "dni", name: "dni" },
+    //             { data: "name", name: "name" },
+    //             { data: "email", name: "email" },
+    //             { data: "role", name: "role" },
+    //             { data: "company.description", name: "company.description" },
+    //             {
+    //                 data: "status-btn",
+    //                 name: "status-btn",
+    //                 orderable: false,
+    //                 searchable: false,
+    //             },
+    //             {
+    //                 data: "action",
+    //                 name: "action",
+    //                 orderable: false,
+    //                 searchable: false,
+    //             },
+    //         ],
+    //         order: [[0, "desc"]],
+    //     });
 
-        $("#register-user-status-checkbox").change(function () {
-            var txtDesc = $("#txt-register-description-user");
-            if (this.checked) {
-                txtDesc.html("Activo");
-            } else {
-                txtDesc.html("Inactivo");
-            }
-        });
+    //     $("html").on("change", ".select-filter-users", function () {
+    //         usersTable.draw();
+    //     });
 
-        /* ------------ REGISTRAR -------------*/
+    //     $("#register-user-status-checkbox").change(function () {
+    //         var txtDesc = $("#txt-register-description-user");
+    //         if (this.checked) {
+    //             txtDesc.html("Activo");
+    //         } else {
+    //             txtDesc.html("Inactivo");
+    //         }
+    //     });
 
-        var inputUserImageStore = $("#input-user-image-store");
-        inputUserImageStore.on("change", function () {
-            if ($(this).val()) {
-                // $('#registerUserForm').validate()
-                // $('#image-upload-category-edit').rules('add', { required: true })
-                var img_path = $(this)[0].value;
-                var img_holder = $(this)
-                    .closest("#registerUserForm")
-                    .find(".img-holder");
-                var currentImagePath = $(this).data("value");
-                var img_extension = img_path
-                    .substring(img_path.lastIndexOf(".") + 1)
-                    .toLowerCase();
+    //     /* ------------ REGISTRAR -------------*/
 
-                if (
-                    img_extension == "jpeg" ||
-                    img_extension == "jpg" ||
-                    img_extension == "png"
-                ) {
-                    if (typeof FileReader != "undefined") {
-                        img_holder.empty();
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                            $("<img/>", {
-                                src: e.target.result,
-                                class: "img-fluid avatar_img",
-                            }).appendTo(img_holder);
-                        };
-                        img_holder.show();
-                        reader.readAsDataURL($(this)[0].files[0]);
-                    } else {
-                        $(img_holder).html(
-                            "Este navegador no soporta Lector de Archivos"
-                        );
-                    }
-                } else {
-                    $(img_holder).html(currentImagePath);
-                    inputUserImageStore.val("");
-                    Toast.fire({
-                        icon: "warning",
-                        title: "¡Selecciona una imagen!",
-                    });
-                }
-            }
-        });
+    //     var inputUserImageStore = $("#input-user-image-store");
+    //     inputUserImageStore.on("change", function () {
+    //         if ($(this).val()) {
+    //             // $('#registerUserForm').validate()
+    //             // $('#image-upload-category-edit').rules('add', { required: true })
+    //             var img_path = $(this)[0].value;
+    //             var img_holder = $(this)
+    //                 .closest("#registerUserForm")
+    //                 .find(".img-holder");
+    //             var currentImagePath = $(this).data("value");
+    //             var img_extension = img_path
+    //                 .substring(img_path.lastIndexOf(".") + 1)
+    //                 .toLowerCase();
 
-        var registerUserForm = $("#registerUserForm").validate({
-            rules: {
-                dni: {
-                    required: true,
-                    maxlength: 11,
-                    remote: {
-                        url: $("#registerUserForm").data("validate"),
-                        method: $("#registerUserForm").attr("method"),
-                        dataType: "JSON",
-                        data: {
-                            dni: function () {
-                                return $("#registerUserForm")
-                                    .find("input[name=dni]")
-                                    .val();
-                            },
-                        },
-                    },
-                },
-                name: {
-                    required: true,
-                    maxlength: 255,
-                },
-                paternal: {
-                    required: true,
-                    maxlength: 255,
-                },
-                maternal: {
-                    required: true,
-                    maxlength: 255,
-                },
-                email: {
-                    required: true,
-                    maxlength: 255,
-                    email: true,
-                },
-                password: {
-                    required: true,
-                },
-                telephone: {
-                    maxlength: 20,
-                },
-                role: {
-                    required: true,
-                },
-                cip: {
-                    maxlength: 10,
-                },
-                company_id: {
-                    required: false,
-                },
-                "id_mining_units[]": {
-                    required: false,
-                },
-                position: {
-                    maxlength: 255,
-                },
-            },
-            messages: {
-                dni: {
-                    remote: "Este usuario ya está registrado",
-                },
-            },
-            submitHandler: function (form, event) {
-                event.preventDefault();
-                var form = $(form);
-                var loadSpinner = form.find(".loadSpinner");
-                var modal = $("#RegisterUserModal");
+    //             if (
+    //                 img_extension == "jpeg" ||
+    //                 img_extension == "jpg" ||
+    //                 img_extension == "png"
+    //             ) {
+    //                 if (typeof FileReader != "undefined") {
+    //                     img_holder.empty();
+    //                     var reader = new FileReader();
+    //                     reader.onload = function (e) {
+    //                         $("<img/>", {
+    //                             src: e.target.result,
+    //                             class: "img-fluid avatar_img",
+    //                         }).appendTo(img_holder);
+    //                     };
+    //                     img_holder.show();
+    //                     reader.readAsDataURL($(this)[0].files[0]);
+    //                 } else {
+    //                     $(img_holder).html(
+    //                         "Este navegador no soporta Lector de Archivos"
+    //                     );
+    //                 }
+    //             } else {
+    //                 $(img_holder).html(currentImagePath);
+    //                 inputUserImageStore.val("");
+    //                 Toast.fire({
+    //                     icon: "warning",
+    //                     title: "¡Selecciona una imagen!",
+    //                 });
+    //             }
+    //         }
+    //     });
 
-                loadSpinner.toggleClass("active");
-                form.find(".btn-save").attr("disabled", "disabled");
+    //     var registerUserForm = $("#registerUserForm").validate({
+    //         rules: {
+    //             dni: {
+    //                 required: true,
+    //                 maxlength: 11,
+    //                 remote: {
+    //                     url: $("#registerUserForm").data("validate"),
+    //                     method: $("#registerUserForm").attr("method"),
+    //                     dataType: "JSON",
+    //                     data: {
+    //                         dni: function () {
+    //                             return $("#registerUserForm")
+    //                                 .find("input[name=dni]")
+    //                                 .val();
+    //                         },
+    //                     },
+    //                 },
+    //             },
+    //             name: {
+    //                 required: true,
+    //                 maxlength: 255,
+    //             },
+    //             paternal: {
+    //                 required: true,
+    //                 maxlength: 255,
+    //             },
+    //             maternal: {
+    //                 required: true,
+    //                 maxlength: 255,
+    //             },
+    //             email: {
+    //                 required: true,
+    //                 maxlength: 255,
+    //                 email: true,
+    //             },
+    //             password: {
+    //                 required: true,
+    //             },
+    //             telephone: {
+    //                 maxlength: 20,
+    //             },
+    //             role: {
+    //                 required: true,
+    //             },
+    //             cip: {
+    //                 maxlength: 10,
+    //             },
+    //             company_id: {
+    //                 required: false,
+    //             },
+    //             "id_mining_units[]": {
+    //                 required: false,
+    //             },
+    //             position: {
+    //                 maxlength: 255,
+    //             },
+    //         },
+    //         messages: {
+    //             dni: {
+    //                 remote: "Este usuario ya está registrado",
+    //             },
+    //         },
+    //         submitHandler: function (form, event) {
+    //             event.preventDefault();
+    //             var form = $(form);
+    //             var loadSpinner = form.find(".loadSpinner");
+    //             var modal = $("#RegisterUserModal");
 
-                var formData = new FormData(form[0]);
+    //             loadSpinner.toggleClass("active");
+    //             form.find(".btn-save").attr("disabled", "disabled");
 
-                $.ajax({
-                    method: form.attr("method"),
-                    url: form.attr("action"),
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    dataType: "JSON",
-                    success: function (data) {
-                        if (data.success) {
-                            registerUserForm.resetForm();
-                            usersTable.ajax.reload(null, false);
+    //             var formData = new FormData(form[0]);
 
-                            form.trigger("reset");
-                            modal.modal("hide");
+    //             $.ajax({
+    //                 method: form.attr("method"),
+    //                 url: form.attr("action"),
+    //                 data: formData,
+    //                 processData: false,
+    //                 contentType: false,
+    //                 dataType: "JSON",
+    //                 success: function (data) {
+    //                     if (data.success) {
+    //                         registerUserForm.resetForm();
+    //                         usersTable.ajax.reload(null, false);
 
-                            Toast.fire({
-                                icon: "success",
-                                text: data.message,
-                            });
-                        } else {
-                            Toast.fire({
-                                icon: "error",
-                                text: data.message,
-                            });
-                        }
-                    },
-                    complete: function (data) {
-                        form.find(".btn-save").removeAttr("disabled");
-                        loadSpinner.toggleClass("active");
-                    },
-                    error: function (data) {
-                        console.log(data);
-                        ToastError.fire();
-                    },
-                });
-            },
-        });
+    //                         form.trigger("reset");
+    //                         modal.modal("hide");
 
-        $("#btn-register-user-modal").on("click", function () {
-            var modal = $("#RegisterUserModal");
-            var button = $(this);
-            var select = modal.find("#registerCompanySelect");
-            var url = button.data("url");
+    //                         Toast.fire({
+    //                             icon: "success",
+    //                             text: data.message,
+    //                         });
+    //                     } else {
+    //                         Toast.fire({
+    //                             icon: "error",
+    //                             text: data.message,
+    //                         });
+    //                     }
+    //                 },
+    //                 complete: function (data) {
+    //                     form.find(".btn-save").removeAttr("disabled");
+    //                     loadSpinner.toggleClass("active");
+    //                 },
+    //                 error: function (data) {
+    //                     console.log(data);
+    //                     ToastError.fire();
+    //                 },
+    //             });
+    //         },
+    //     });
 
-            registerUserForm.resetForm();
-            select.html("");
+    //     $("#btn-register-user-modal").on("click", function () {
+    //         var modal = $("#RegisterUserModal");
+    //         var button = $(this);
+    //         var select = modal.find("#registerCompanySelect");
+    //         var url = button.data("url");
 
-            $.ajax({
-                type: "GET",
-                url: url,
-                dataType: "JSON",
-                success: function (data) {
-                    var companies = data["companies"];
-                    select.append("<option></option>");
+    //         registerUserForm.resetForm();
+    //         select.html("");
 
-                    $.each(companies, function (key, values) {
-                        select.append(
-                            '<option value="' +
-                                values.id +
-                                '">' +
-                                values.description +
-                                "</option>"
-                        );
-                    });
-                },
-                complete: function (data) {
-                    modal.modal("toggle");
-                },
-                error: function (data) {
-                    console.log(data);
-                },
-            });
+    //         $.ajax({
+    //             type: "GET",
+    //             url: url,
+    //             dataType: "JSON",
+    //             success: function (data) {
+    //                 var companies = data["companies"];
+    //                 select.append("<option></option>");
 
-            // modal.modal('toggle')
-        });
+    //                 $.each(companies, function (key, values) {
+    //                     select.append(
+    //                         '<option value="' +
+    //                             values.id +
+    //                             '">' +
+    //                             values.description +
+    //                             "</option>"
+    //                     );
+    //                 });
+    //             },
+    //             complete: function (data) {
+    //                 modal.modal("toggle");
+    //             },
+    //             error: function (data) {
+    //                 console.log(data);
+    //             },
+    //         });
 
-        /* ---------------- EDITAR  ----------------- */
+    //         // modal.modal('toggle')
+    //     });
 
-        $("#edit-user-status-checkbox").change(function () {
-            var txtDesc = $("#txt-edit-description-user");
-            if (this.checked) {
-                txtDesc.html("Activo");
-            } else {
-                txtDesc.html("Inactivo");
-            }
-        });
+    //     /* ---------------- EDITAR  ----------------- */
 
-        var editUserForm = $("#editUserForm").validate({
-            rules: {
-                dni: {
-                    required: true,
-                    maxlength: 11,
-                    remote: {
-                        url: $("#editUserForm").data("validate"),
-                        method: $("#editUserForm").attr("method"),
-                        dataType: "JSON",
-                        data: {
-                            dni: function () {
-                                return $("#editUserForm")
-                                    .find("input[name=dni]")
-                                    .val();
-                            },
-                            id: function () {
-                                return $("#editUserForm")
-                                    .find("input[name=id]")
-                                    .val();
-                            },
-                        },
-                    },
-                },
-                name: {
-                    required: true,
-                    maxlength: 255,
-                },
-                paternal: {
-                    required: true,
-                    maxlength: 255,
-                },
-                maternal: {
-                    required: true,
-                    maxlength: 255,
-                },
-                email: {
-                    required: true,
-                    maxlength: 255,
-                    email: true,
-                },
-                telephone: {
-                    maxlength: 20,
-                },
-                role: {
-                    required: true,
-                },
-                cip: {
-                    maxlength: 10,
-                },
-                company_id: {
-                    required: false,
-                },
-                "id_mining_units[]": {
-                    required: false,
-                },
-                position: {
-                    maxlength: 255,
-                },
-            },
-            messages: {
-                dni: {
-                    remote: "Este usuario ya está registrado",
-                },
-            },
-            submitHandler: function (form, event) {
-                event.preventDefault();
-                var form = $(form);
-                var loadSpinner = form.find(".loadSpinner");
-                var modal = $("#EditUserModal");
+    //     $("#edit-user-status-checkbox").change(function () {
+    //         var txtDesc = $("#txt-edit-description-user");
+    //         if (this.checked) {
+    //             txtDesc.html("Activo");
+    //         } else {
+    //             txtDesc.html("Inactivo");
+    //         }
+    //     });
 
-                var formData = new FormData(form[0]);
+    //     var editUserForm = $("#editUserForm").validate({
+    //         rules: {
+    //             dni: {
+    //                 required: true,
+    //                 maxlength: 11,
+    //                 remote: {
+    //                     url: $("#editUserForm").data("validate"),
+    //                     method: $("#editUserForm").attr("method"),
+    //                     dataType: "JSON",
+    //                     data: {
+    //                         dni: function () {
+    //                             return $("#editUserForm")
+    //                                 .find("input[name=dni]")
+    //                                 .val();
+    //                         },
+    //                         id: function () {
+    //                             return $("#editUserForm")
+    //                                 .find("input[name=id]")
+    //                                 .val();
+    //                         },
+    //                     },
+    //                 },
+    //             },
+    //             name: {
+    //                 required: true,
+    //                 maxlength: 255,
+    //             },
+    //             paternal: {
+    //                 required: true,
+    //                 maxlength: 255,
+    //             },
+    //             maternal: {
+    //                 required: true,
+    //                 maxlength: 255,
+    //             },
+    //             email: {
+    //                 required: true,
+    //                 maxlength: 255,
+    //                 email: true,
+    //             },
+    //             telephone: {
+    //                 maxlength: 20,
+    //             },
+    //             role: {
+    //                 required: true,
+    //             },
+    //             cip: {
+    //                 maxlength: 10,
+    //             },
+    //             company_id: {
+    //                 required: false,
+    //             },
+    //             "id_mining_units[]": {
+    //                 required: false,
+    //             },
+    //             position: {
+    //                 maxlength: 255,
+    //             },
+    //         },
+    //         messages: {
+    //             dni: {
+    //                 remote: "Este usuario ya está registrado",
+    //             },
+    //         },
+    //         submitHandler: function (form, event) {
+    //             event.preventDefault();
+    //             var form = $(form);
+    //             var loadSpinner = form.find(".loadSpinner");
+    //             var modal = $("#EditUserModal");
 
-                loadSpinner.toggleClass("active");
+    //             var formData = new FormData(form[0]);
 
-                form.find(".btn-save").attr("disabled", "disabled");
+    //             loadSpinner.toggleClass("active");
 
-                $.ajax({
-                    method: form.attr("method"),
-                    url: form.attr("action"),
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    dataType: "JSON",
-                    success: function (data) {
-                        if (data.success) {
-                            usersTable.ajax.reload(null, false);
-                            form.trigger("reset");
-                            modal.modal("hide");
+    //             form.find(".btn-save").attr("disabled", "disabled");
 
-                            Toast.fire({
-                                icon: "success",
-                                text: data.message,
-                            });
-                        } else {
-                            Toast.fire({
-                                icon: "error",
-                                text: data.message,
-                            });
-                        }
-                    },
-                    complete: function (data) {
-                        loadSpinner.toggleClass("active");
-                        form.find(".btn-save").removeAttr("disabled");
-                    },
-                    error: function (data) {
-                        console.log(data);
-                    },
-                });
-            },
-        });
+    //             $.ajax({
+    //                 method: form.attr("method"),
+    //                 url: form.attr("action"),
+    //                 data: formData,
+    //                 processData: false,
+    //                 contentType: false,
+    //                 dataType: "JSON",
+    //                 success: function (data) {
+    //                     if (data.success) {
+    //                         usersTable.ajax.reload(null, false);
+    //                         form.trigger("reset");
+    //                         modal.modal("hide");
 
-        var inputUserImageEdit = $("#input-user-image-edit");
-        inputUserImageEdit.on("change", function () {
-            if ($(this).val()) {
-                var img_path = $(this)[0].value;
-                var img_holder = $(this)
-                    .closest("#editUserForm")
-                    .find(".img-holder");
-                var currentImagePath = $(this).data("value");
-                var img_extension = img_path
-                    .substring(img_path.lastIndexOf(".") + 1)
-                    .toLowerCase();
+    //                         Toast.fire({
+    //                             icon: "success",
+    //                             text: data.message,
+    //                         });
+    //                     } else {
+    //                         Toast.fire({
+    //                             icon: "error",
+    //                             text: data.message,
+    //                         });
+    //                     }
+    //                 },
+    //                 complete: function (data) {
+    //                     loadSpinner.toggleClass("active");
+    //                     form.find(".btn-save").removeAttr("disabled");
+    //                 },
+    //                 error: function (data) {
+    //                     console.log(data);
+    //                 },
+    //             });
+    //         },
+    //     });
 
-                if (
-                    img_extension == "jpeg" ||
-                    img_extension == "jpg" ||
-                    img_extension == "png"
-                ) {
-                    if (typeof FileReader != "undefined") {
-                        img_holder.empty();
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                            $("<img/>", {
-                                src: e.target.result,
-                                class: "img-fluid avatar_img",
-                            }).appendTo(img_holder);
-                        };
-                        img_holder.show();
-                        reader.readAsDataURL($(this)[0].files[0]);
-                    } else {
-                        $(img_holder).html(
-                            "Este navegador no soporta Lector de Archivos"
-                        );
-                    }
-                } else {
-                    $(img_holder).html(currentImagePath);
-                    inputUserImageEdit.val("");
-                    Toast.fire({
-                        icon: "warning",
-                        title: "¡Selecciona una imagen!",
-                    });
-                }
-            }
-        });
+    //     var inputUserImageEdit = $("#input-user-image-edit");
+    //     inputUserImageEdit.on("change", function () {
+    //         if ($(this).val()) {
+    //             var img_path = $(this)[0].value;
+    //             var img_holder = $(this)
+    //                 .closest("#editUserForm")
+    //                 .find(".img-holder");
+    //             var currentImagePath = $(this).data("value");
+    //             var img_extension = img_path
+    //                 .substring(img_path.lastIndexOf(".") + 1)
+    //                 .toLowerCase();
 
-        $(".main-content").on("click", ".editUser", function () {
-            var modal = $("#EditUserModal");
-            var getDataUrl = $(this).data("send");
-            var url = $(this).data("url");
-            var form = modal.find("#editUserForm");
-            var selectCompany = modal.find("#editCompanySelect");
-            var selectRole = modal.find("#editRoleSelect");
-            var selectMiningUnits = modal.find("#editMiningUnitsSelect");
+    //             if (
+    //                 img_extension == "jpeg" ||
+    //                 img_extension == "jpg" ||
+    //                 img_extension == "png"
+    //             ) {
+    //                 if (typeof FileReader != "undefined") {
+    //                     img_holder.empty();
+    //                     var reader = new FileReader();
+    //                     reader.onload = function (e) {
+    //                         $("<img/>", {
+    //                             src: e.target.result,
+    //                             class: "img-fluid avatar_img",
+    //                         }).appendTo(img_holder);
+    //                     };
+    //                     img_holder.show();
+    //                     reader.readAsDataURL($(this)[0].files[0]);
+    //                 } else {
+    //                     $(img_holder).html(
+    //                         "Este navegador no soporta Lector de Archivos"
+    //                     );
+    //                 }
+    //             } else {
+    //                 $(img_holder).html(currentImagePath);
+    //                 inputUserImageEdit.val("");
+    //                 Toast.fire({
+    //                     icon: "warning",
+    //                     title: "¡Selecciona una imagen!",
+    //                 });
+    //             }
+    //         }
+    //     });
 
-            selectCompany.html("");
-            selectMiningUnits.html("");
-            editUserForm.resetForm();
-            form.trigger("reset");
+    //     $(".main-content").on("click", ".editUser", function () {
+    //         var modal = $("#EditUserModal");
+    //         var getDataUrl = $(this).data("send");
+    //         var url = $(this).data("url");
+    //         var form = modal.find("#editUserForm");
+    //         var selectCompany = modal.find("#editCompanySelect");
+    //         var selectRole = modal.find("#editRoleSelect");
+    //         var selectMiningUnits = modal.find("#editMiningUnitsSelect");
 
-            form.attr("action", url);
+    //         selectCompany.html("");
+    //         selectMiningUnits.html("");
+    //         editUserForm.resetForm();
+    //         form.trigger("reset");
 
-            $.ajax({
-                type: "GET",
-                url: getDataUrl,
-                dataType: "JSON",
-                success: function (data) {
-                    var user = data["user"];
+    //         form.attr("action", url);
 
-                    modal.find("input[name=id]").val(user.id);
-                    modal.find("input[name=dni]").val(user.dni);
-                    modal.find("input[name=name]").val(user.name);
-                    modal.find("input[name=paternal]").val(user.paternal);
-                    modal.find("input[name=maternal]").val(user.maternal);
-                    modal.find("input[name=email]").val(user.email);
-                    modal.find("input[name=telephone]").val(user.telephone);
-                    modal.find("input[name=cip]").val(user.cip);
-                    modal.find("input[name=position]").val(user.position);
+    //         $.ajax({
+    //             type: "GET",
+    //             url: getDataUrl,
+    //             dataType: "JSON",
+    //             success: function (data) {
+    //                 var user = data["user"];
 
-                    selectRole.val(user.role).change();
-                    selectCompany.append("<option></option>");
-                    $.each(data["companies"], function (key, values) {
-                        selectCompany.append(
-                            '<option value="' +
-                                values.id +
-                                '">' +
-                                values.description +
-                                "</option>"
-                        );
-                    });
+    //                 modal.find("input[name=id]").val(user.id);
+    //                 modal.find("input[name=dni]").val(user.dni);
+    //                 modal.find("input[name=name]").val(user.name);
+    //                 modal.find("input[name=paternal]").val(user.paternal);
+    //                 modal.find("input[name=maternal]").val(user.maternal);
+    //                 modal.find("input[name=email]").val(user.email);
+    //                 modal.find("input[name=telephone]").val(user.telephone);
+    //                 modal.find("input[name=cip]").val(user.cip);
+    //                 modal.find("input[name=position]").val(user.position);
 
-                    selectCompany.val(user.company_id).change();
+    //                 selectRole.val(user.role).change();
+    //                 selectCompany.append("<option></option>");
+    //                 $.each(data["companies"], function (key, values) {
+    //                     selectCompany.append(
+    //                         '<option value="' +
+    //                             values.id +
+    //                             '">' +
+    //                             values.description +
+    //                             "</option>"
+    //                     );
+    //                 });
 
-                    selectMiningUnits.append("<option></option>");
-                    $.each(data.miningUnits, function (key, values) {
-                        selectMiningUnits.append(
-                            '<option value="' +
-                                values.id +
-                                '">' +
-                                values.description +
-                                "</option>"
-                        );
-                    });
+    //                 selectCompany.val(user.company_id).change();
 
-                    selectMiningUnits.val(data.miningUnitsSelect).change();
+    //                 selectMiningUnits.append("<option></option>");
+    //                 $.each(data.miningUnits, function (key, values) {
+    //                     selectMiningUnits.append(
+    //                         '<option value="' +
+    //                             values.id +
+    //                             '">' +
+    //                             values.description +
+    //                             "</option>"
+    //                     );
+    //                 });
 
-                    modal
-                        .find(".img-holder")
-                        .html(
-                            '<img class="img-fluid avatar_img" id="image-avatar-edit" src="' +
-                                data.url_img +
-                                '"></img>'
-                        );
-                    modal
-                        .find("#input-user-image-edit")
-                        .attr(
-                            "data-value",
-                            '<img scr="' +
-                                data.url_img +
-                                '" class="img-fluid avatar_img"></img>'
-                        );
-                    modal.find("#input-user-image-edit").val("");
+    //                 selectMiningUnits.val(data.miningUnitsSelect).change();
 
-                    if (user.active == "S") {
-                        modal
-                            .find("#edit-user-status-checkbox")
-                            .prop("checked", true);
-                        $("#txt-edit-description-user").html("Activo");
-                    } else {
-                        modal
-                            .find("#edit-user-status-checkbox")
-                            .prop("checked", false);
-                        $("#txt-edit-description-user").html("Inactivo");
-                    }
+    //                 modal
+    //                     .find(".img-holder")
+    //                     .html(
+    //                         '<img class="img-fluid avatar_img" id="image-avatar-edit" src="' +
+    //                             data.url_img +
+    //                             '"></img>'
+    //                     );
+    //                 modal
+    //                     .find("#input-user-image-edit")
+    //                     .attr(
+    //                         "data-value",
+    //                         '<img scr="' +
+    //                             data.url_img +
+    //                             '" class="img-fluid avatar_img"></img>'
+    //                     );
+    //                 modal.find("#input-user-image-edit").val("");
 
-                    if (data.isAuth) {
-                        selectRole.attr("readonly", true);
-                    } else {
-                        selectRole.removeAttr("readonly");
-                    }
-                },
-                complete: function (data) {
-                    modal.modal("toggle");
-                },
-                error: function (data) {
-                    console.log(data);
-                },
-            });
-        });
+    //                 if (user.active == "S") {
+    //                     modal
+    //                         .find("#edit-user-status-checkbox")
+    //                         .prop("checked", true);
+    //                     $("#txt-edit-description-user").html("Activo");
+    //                 } else {
+    //                     modal
+    //                         .find("#edit-user-status-checkbox")
+    //                         .prop("checked", false);
+    //                     $("#txt-edit-description-user").html("Inactivo");
+    //                 }
 
-        /* ----------- ELIMINAR ---------------*/
+    //                 if (data.isAuth) {
+    //                     selectRole.attr("readonly", true);
+    //                 } else {
+    //                     selectRole.removeAttr("readonly");
+    //                 }
+    //             },
+    //             complete: function (data) {
+    //                 modal.modal("toggle");
+    //             },
+    //             error: function (data) {
+    //                 console.log(data);
+    //             },
+    //         });
+    //     });
 
-        $(".main-content").on("click", ".deleteUser", function () {
-            var url = $(this).data("url");
+    //     /* ----------- ELIMINAR ---------------*/
 
-            SwalDelete.fire().then(
-                function (e) {
-                    if (e.value === true) {
-                        $.ajax({
-                            type: "DELETE",
-                            url: url,
-                            dataType: "JSON",
-                            success: function (result) {
-                                if (result.success === true) {
-                                    usersTable.ajax.reload(null, false);
-                                    Toast.fire({
-                                        icon: "success",
-                                        text: "¡Registro eliminado!",
-                                    });
-                                }
-                            },
-                            error: function (result) {
-                                console.log(result);
-                                ToastError.fire();
-                            },
-                        });
-                    } else {
-                        e.dismiss;
-                    }
-                },
-                function (dismiss) {
-                    return false;
-                }
-            );
-        });
+    //     $(".main-content").on("click", ".deleteUser", function () {
+    //         var url = $(this).data("url");
 
-        // ----------- REGISTRO MASIVO -----------
+    //         SwalDelete.fire().then(
+    //             function (e) {
+    //                 if (e.value === true) {
+    //                     $.ajax({
+    //                         type: "DELETE",
+    //                         url: url,
+    //                         dataType: "JSON",
+    //                         success: function (result) {
+    //                             if (result.success === true) {
+    //                                 usersTable.ajax.reload(null, false);
+    //                                 Toast.fire({
+    //                                     icon: "success",
+    //                                     text: "¡Registro eliminado!",
+    //                                 });
+    //                             }
+    //                         },
+    //                         error: function (result) {
+    //                             console.log(result);
+    //                             ToastError.fire();
+    //                         },
+    //                     });
+    //                 } else {
+    //                     e.dismiss;
+    //                 }
+    //             },
+    //             function (dismiss) {
+    //                 return false;
+    //             }
+    //         );
+    //     });
 
-        var registerUserMassiveForm = $("#registerUserMassiveForm").validate({
-            rules: {
-                file: {
-                    required: true,
-                },
-            },
-            submitHandler: function (form, event) {
-                event.preventDefault();
-                var form = $(form);
-                var loadSpinner = form.find(".loadSpinner");
-                var modal = $("#RegisterUserMassiveModal");
+    //     // ----------- REGISTRO MASIVO -----------
 
-                loadSpinner.toggleClass("active");
-                form.find(".btn-save").attr("disabled", "disabled");
+    //     var registerUserMassiveForm = $("#registerUserMassiveForm").validate({
+    //         rules: {
+    //             file: {
+    //                 required: true,
+    //             },
+    //         },
+    //         submitHandler: function (form, event) {
+    //             event.preventDefault();
+    //             var form = $(form);
+    //             var loadSpinner = form.find(".loadSpinner");
+    //             var modal = $("#RegisterUserMassiveModal");
 
-                var formData = new FormData(form[0]);
+    //             loadSpinner.toggleClass("active");
+    //             form.find(".btn-save").attr("disabled", "disabled");
 
-                $.ajax({
-                    method: form.attr("method"),
-                    url: form.attr("action"),
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    dataType: "JSON",
-                    success: function (data) {
-                        if (data.success) {
-                            usersTable.ajax.reload(null, false);
+    //             var formData = new FormData(form[0]);
 
-                            registerUserMassiveForm.resetForm();
-                            form.trigger("reset");
-                            modal.modal("hide");
+    //             $.ajax({
+    //                 method: form.attr("method"),
+    //                 url: form.attr("action"),
+    //                 data: formData,
+    //                 processData: false,
+    //                 contentType: false,
+    //                 dataType: "JSON",
+    //                 success: function (data) {
+    //                     if (data.success) {
+    //                         usersTable.ajax.reload(null, false);
 
-                            Toast.fire({
-                                icon: "success",
-                                text: data.message,
-                            }).then((result) => {
-                                if (
-                                    result.dismiss === Swal.DismissReason.timer
-                                ) {
-                                    if (data.foundDuplicates) {
-                                        var notebody = $("<ul/>");
-                                        $.each(
-                                            data.notebody,
-                                            function (key, values) {
-                                                var sub_li =
-                                                    $("<li/>").html(values);
-                                                notebody.append(sub_li);
-                                            }
-                                        );
+    //                         registerUserMassiveForm.resetForm();
+    //                         form.trigger("reset");
+    //                         modal.modal("hide");
 
-                                        Swal.fire({
-                                            toast: true,
-                                            position: "top-end",
-                                            showConfirmButton: true,
-                                            timerProgressBar: false,
-                                            icon: "warning",
-                                            title: data.note,
-                                            html: notebody[0].outerHTML,
-                                        });
-                                    }
-                                }
-                            });
-                        } else {
-                            Toast.fire({
-                                icon: "error",
-                                text: data.message,
-                            });
-                        }
-                    },
-                    complete: function (data) {
-                        form.find(".btn-save").removeAttr("disabled");
-                        loadSpinner.toggleClass("active");
-                    },
-                    error: function (data) {
-                        console.log(data);
-                        ToastError.fire();
-                    },
-                });
-            },
-        });
-    }
+    //                         Toast.fire({
+    //                             icon: "success",
+    //                             text: data.message,
+    //                         }).then((result) => {
+    //                             if (
+    //                                 result.dismiss === Swal.DismissReason.timer
+    //                             ) {
+    //                                 if (data.foundDuplicates) {
+    //                                     var notebody = $("<ul/>");
+    //                                     $.each(
+    //                                         data.notebody,
+    //                                         function (key, values) {
+    //                                             var sub_li =
+    //                                                 $("<li/>").html(values);
+    //                                             notebody.append(sub_li);
+    //                                         }
+    //                                     );
+
+    //                                     Swal.fire({
+    //                                         toast: true,
+    //                                         position: "top-end",
+    //                                         showConfirmButton: true,
+    //                                         timerProgressBar: false,
+    //                                         icon: "warning",
+    //                                         title: data.note,
+    //                                         html: notebody[0].outerHTML,
+    //                                     });
+    //                                 }
+    //                             }
+    //                         });
+    //                     } else {
+    //                         Toast.fire({
+    //                             icon: "error",
+    //                             text: data.message,
+    //                         });
+    //                     }
+    //                 },
+    //                 complete: function (data) {
+    //                     form.find(".btn-save").removeAttr("disabled");
+    //                     loadSpinner.toggleClass("active");
+    //                 },
+    //                 error: function (data) {
+    //                     console.log(data);
+    //                     ToastError.fire();
+    //                 },
+    //             });
+    //         },
+    //     });
+    // }
+
+
 
     if ($("#ownerCompanies-table").length) {
         var ownerCompaniesTableEle = $("#ownerCompanies-table");
@@ -4643,7 +4651,7 @@ $(function () {
 
         /* ----- SET ACTIVE -----*/
 
-        $(".main-content").on(
+        $("html").on(
             "click",
             ".course-section-box .title-container",
             function () {
@@ -4708,15 +4716,12 @@ $(function () {
                     required: true,
                     maxlength: 500,
                 },
-                video: {
-                    required: true,
-                },
             },
         });
 
         /*----- STORE DATA -------*/
 
-        $(".main-content").on(
+        $("html").on(
             "click",
             "#btn-register-chapter-modal",
             function () {
@@ -4751,9 +4756,9 @@ $(function () {
                             this.addFile(file);
                         },
                         accept: function (file, done) {
-                            $("#registerChapterForm")
-                                .find(".message-file-invalid")
-                                .removeClass("show");
+                            // $("#registerChapterForm")
+                            //     .find(".message-file-invalid")
+                            //     .removeClass("show");
                             if (!file.type.match("video/*")) {
                                 Toast.fire({
                                     icon: "warning",
@@ -4786,22 +4791,92 @@ $(function () {
                                 function (e) {
                                     e.preventDefault();
                                     e.stopPropagation();
-                                    var messageInvalid = $(this).find(
-                                        ".message-file-invalid"
-                                    );
+                                    // var messageInvalid = $(this).find(
+                                    //     ".message-file-invalid"
+                                    // );
 
-                                    if (
-                                        myDropzone.getQueuedFiles().length == 1
-                                    ) {
-                                        messageInvalid.removeClass("show");
+                                    if ($("#registerChapterForm").valid()) {
+                                        if (
+                                            myDropzone.getQueuedFiles().length == 1
+                                        ) {
+                                            // messageInvalid.removeClass("show");
+                                            // if ($("#registerChapterForm").valid()) {
+                                                myDropzone.processQueue();
+                                            // }
+                                        } else {
+                                            myDropzone.removeAllFiles();
+                                            loadSpinner.toggleClass("active");
+                                            form.find(".btn-save").attr(
+                                                "disabled",
+                                                "disabled"
+                                            );
 
-                                        if ($("#registerChapterForm").valid()) {
-                                            myDropzone.processQueue();
+                                            $.ajax({
+                                                method: form.attr("method"),
+                                                url: url,
+                                                data: form.serialize(),
+                                                dataType: "JSON",
+                                                success: function (data) {
+                                                    if (data.success) {
+
+                                                        let urlTable = $(
+                                                            "#section-box-" + response.id
+                                                        ).data("table");
+
+                                                        this.removeAllFiles();
+                                                        registerChapterForm.resetForm();
+                                                        form.trigger("reset");
+
+                                                        var chaptersBox = $("#chapters-list-container");
+                                                        var sectionsBox = $("#sections-list-container");
+                                                        var courseBox = $("#course-box-container");
+
+                                                        chaptersBox.html(response.htmlChapter);
+                                                        sectionsBox.html(response.htmlSection);
+                                                        courseBox.html(response.htmlCourse);
+
+                                                        $(".order-section-select").select2({
+                                                            minimumResultsForSearch: -1,
+                                                        });
+
+                                                        var chaptersTableEle = $(
+                                                            "#freeCourses-chapters-table"
+                                                        );
+                                                        chapterTable(
+                                                            chaptersTableEle,
+                                                            DataTableEs,
+                                                            urlTable
+                                                        );
+
+                                                        Toast.fire({
+                                                            icon: "success",
+                                                            text: response.message,
+                                                        });
+                                                    } else {
+                                                        Toast.fire({
+                                                            icon: "error",
+                                                            text: data.message,
+                                                        });
+                                                    }
+
+                                                    modal.modal("hide");
+                                                },
+                                                complete: function (data) {
+                                                    loadSpinner.toggleClass("active");
+                                                    form.find(".btn-save").removeAttr(
+                                                        "disabled"
+                                                    );
+                                                },
+                                                error: function (data) {
+                                                    console.log(data);
+                                                },
+                                            });
+
+                                            // messageInvalid.addClass("show");
                                         }
-                                    } else {
-                                        myDropzone.removeAllFiles();
-                                        messageInvalid.addClass("show");
                                     }
+
+
                                 }
                             );
                         },
@@ -4823,6 +4898,7 @@ $(function () {
                             form.find(".btn-save").attr("disabled", "disabled");
                         },
                         success: function (file, response) {
+
                             if (response.success) {
                                 let urlTable = $(
                                     "#section-box-" + response.id
@@ -4898,7 +4974,7 @@ $(function () {
             },
         });
 
-        $(".main-content").on("click", ".editChapter", function () {
+        $("html").on("click", ".editChapter", function () {
             var button = $(this);
             var modal = $("#editChapterModal");
             var getDataUrl = button.data("send");
@@ -5144,7 +5220,7 @@ $(function () {
 
         /* -------- PREVIEW VIDEO ---------*/
 
-        $(".main-content").on(
+        $("html").on(
             "click",
             ".preview-chapter-video-button",
             function (e) {

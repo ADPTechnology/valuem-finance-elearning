@@ -35,10 +35,10 @@
                                                     <i class="fas fa-user"></i>
                                                 </div>
                                             </div>
-                                            <input id="dni" name="dni" type="text"
-                                                class="form-control color-input-bk @error('dni') is-invalid @enderror"
-                                                required autocomplete="dni" value="{{ old('dni') }}"
-                                                placeholder="Usuario (DNI)">
+                                            <input id="email" name="email" type="text"
+                                                class="form-control color-input-bk @error('email') is-invalid @enderror"
+                                                required autocomplete="email" value="{{ old('email') }}"
+                                                placeholder="Correo electrónico">
                                         </div>
                                     </div>
 
@@ -60,7 +60,7 @@
                                                 </div>
                                             </div>
                                             <input id="password" name="password" type="password" required
-                                                class="form-control color-input-bk @error('dni') is-invalid @enderror"
+                                                class="form-control color-input-bk @error('email') is-invalid @enderror"
                                                 placeholder="Contraseña">
                                         </div>
                                     </div>

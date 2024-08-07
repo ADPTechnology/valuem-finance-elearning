@@ -32,11 +32,6 @@ class DynamicQuestion extends Model
         return $this->belongsTo(Exam::class, 'exam_id', 'id');
     }
 
-    public function fcVideo()
-    {
-        return $this->belongsTo(FcVideo::class, 'f_curve_video_id', 'id');
-    }
-
     public function questionType()
     {
         return $this->belongsTo(QuestionType::class, 'question_type_id', 'id');

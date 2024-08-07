@@ -56,17 +56,20 @@ class SectionChapterService
     {
         $lastOrder = $section->getChapterLastOrder();
 
+        $chapter = SectionChapter::create($request->all() + [
+            "chapter_order" => $lastOrder + 1,
+            "duration" => 0,
+            "section_id" => $section->id
+        ]);
+
         if ($request->hasFile('file')) {
 
             $video = $request->file('file');
-
             $videoId3 = new GetId3($video);
             $duration = round($videoId3->getPlaytimeSeconds() / 60);
 
-            $chapter = SectionChapter::create($request->all() + [
-                "chapter_order" => $lastOrder + 1,
-                "duration" => $duration,
-                "section_id" => $section->id
+            $chapter->update([
+                'duration' => $duration
             ]);
 
             if ($chapter) {
@@ -144,7 +147,9 @@ class SectionChapterService
         $section_id = $chapter->courseSection->id;
         $chapter->progressUsers()->detach();
 
-        app(FileService::class)->destroy($chapter->file, $storage);
+        if ($chapter->file) {
+            app(FileService::class)->destroy($chapter->file, $storage);
+        }
 
         $isDeleted = $chapter->delete();
 

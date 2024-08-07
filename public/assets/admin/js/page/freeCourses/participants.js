@@ -5,9 +5,11 @@ import {
     SwalDelete,
 } from "../../../../common/js/sweet-alerts.js";
 
+
 $(() => {
     let usersDataTableEle = $("#users-free-courses-table");
     let getDataUrl = usersDataTableEle.data("url");
+
     let usersOnCourseTable = usersDataTableEle.DataTable({
         responsive: true,
         language: DataTableEs,
@@ -24,12 +26,8 @@ $(() => {
         },
         columns: [
             { data: "id", name: "id" },
-            { data: "dni", name: "dni" },
+            { data: "email", name: "email" },
             { data: "name", name: "name" },
-            {
-                data: "company.description",
-                name: "company.description",
-            },
             {data:"productCertifications.flg_finished", name:"product_certifications.flg_finished"},
             {data:"productCertifications.score", name:"product_certifications.score"},
             {data: "enabled", name: "enabled", orderable: false, searchable: false,},
@@ -197,9 +195,11 @@ $(() => {
                              </button>';
 
     $("html").on("click", "#btn-register-participant-on-course", function () {
+
         var modal = $("#fc_registerParticipantsModal");
 
         if (!$("#fc-course-users-participants-table_wrapper").length) {
+
             var fcIntParticipantsTable = $(
                 "#fc-course-users-participants-table"
             );
@@ -213,11 +213,6 @@ $(() => {
                 processing: true,
                 ajax: {
                     url: getDataUrl,
-                    data: function (data) {
-                        data.search_company = modal
-                            .find(".search_from_company_select")
-                            .val();
-                    },
                 },
                 columns: [
                     {
@@ -228,13 +223,8 @@ $(() => {
                         className: "text-center",
                     },
                     { data: "id", name: "id" },
-                    { data: "dni", name: "dni" },
+                    { data: "email", name: "email" },
                     { data: "name", name: "name" },
-                    { data: "position", name: "position" },
-                    {
-                        data: "company.description",
-                        name: "company.description",
-                    },
                 ],
                 order: [[1, "asc"]],
             });
@@ -245,9 +235,9 @@ $(() => {
         modal.modal("show");
     });
 
-    $("html").on("change", ".search_from_company_select", function () {
-        innerParticipantsTable.draw();
-    });
+    // $("html").on("change", ".search_from_company_select", function () {
+    //     innerParticipantsTable.draw();
+    // });
 
     $("#fc-course-users-participants-table").on("draw.dt", function () {
         $("#btn-store-participant-container").html(BUTTON_DISABLED);

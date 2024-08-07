@@ -35,54 +35,54 @@
                 </a>
             </li>
 
-            <li class="{{ setActive('admin.companies.*') }}">
+            {{-- <li class="{{ setActive('admin.companies.*') }}">
                 <a href="{{ route('admin.companies.index') }}" class="nav-link">
                     <i class="fa-solid fa-building"></i>
                     <span>Empresas</span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li class="{{ setActive('admin.ownerCompanies.*') }}">
+            {{-- <li class="{{ setActive('admin.ownerCompanies.*') }}">
                 <a href="{{ route('admin.ownerCompanies.index') }}" class="nav-link">
                     <i class="fa-regular fa-building"></i>
                     <span>Empresas Titulares</span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li class="{{ setActive('admin.miningUnits.*') }}">
+            {{-- <li class="{{ setActive('admin.miningUnits.*') }}">
                 <a href="{{ route('admin.miningUnits.index') }}" class="nav-link">
                     <i class="fa-solid fa-mountain-city"></i>
                     <span>Unidades Mineras</span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li class="{{ setActive('admin.rooms.*') }}">
+            {{-- <li class="{{ setActive('admin.rooms.*') }}">
                 <a href="{{ route('admin.rooms.index') }}" class="nav-link">
                     <i class="fa-solid fa-chalkboard-user"></i>
                     <span>Salas</span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li class="{{ setActive('admin.coursetypes.*') }}">
+            {{-- <li class="{{ setActive('admin.coursetypes.*') }}">
                 <a href="{{ route('admin.coursetypes.index') }}" class="nav-link">
                     <i class="fa-solid fa-book-bookmark"></i>
                     <span>Tipos de curso</span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li class="{{ setActive('admin.courses.*') }}">
+            {{-- <li class="{{ setActive('admin.courses.*') }}">
                 <a class="nav-link" href="{{ route('admin.courses.index') }}">
                     <i class="fa-solid fa-book"></i>
                     <span>Cursos</span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li class="{{ setActive('admin.specCourses.*') }}">
+            {{-- <li class="{{ setActive('admin.specCourses.*') }}">
                 <a class="nav-link" href="{{ route('admin.specCourses.index') }}">
                     <i class="fa-solid fa-graduation-cap"></i>
                     <span>Cursos de Espec.</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="{{ setActive('admin.freeCourses.*') }}">
                 <a href="{{ route('admin.freeCourses.index') }}" class="nav-link">
@@ -91,28 +91,28 @@
                 </a>
             </li>
 
-            <li class="{{ setActive('admin.freeCourseLive.*') }}">
+            {{-- <li class="{{ setActive('admin.freeCourseLive.*') }}">
                 <a href="{{ route('admin.freeCourseLive.index') }}" class="nav-link">
                     <i class="fa-solid fa-circle-play"></i>
                     <span>Cursos libres en Vivo</span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li class="{{ setActive('admin.exams.*') }}">
+            {{-- <li class="{{ setActive('admin.exams.*') }}">
                 <a href="{{ route('admin.exams.index') }}" class="nav-link">
                     <i class="fa-solid fa-file-signature"></i>
                     <span>Exámenes</span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li class="{{ setActive('admin.events.*') }}">
+            {{-- <li class="{{ setActive('admin.events.*') }}">
                 <a href="{{ route('admin.events.index') }}" class="nav-link">
                     <i class="fa-solid fa-calendar-days"></i>
                     <span>Eventos</span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li class="dropdown {{ setActive('admin.webinars.*') }}">
+            {{-- <li class="dropdown {{ setActive('admin.webinars.*') }}">
                 <a href="javascript:void(0);" class="nav-link has-dropdown">
                     <i class="fa-solid fa-desktop"></i>
                     <span>Webinar</span>
@@ -125,11 +125,11 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
 
 
 
-            <li class="{{ setActive('admin.forgettingCurve.*') }}">
+            {{-- <li class="{{ setActive('admin.forgettingCurve.*') }}">
                 <a href="{{ route('admin.forgettingCurve.index') }}" class="nav-link">
                     <i>
                         <svg class="icon icon-tabler icon-tabler-ease-out-control-point" width="19" height="19"
@@ -144,16 +144,16 @@
                     </i>
                     <span>Curva del olvido</span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li class="{{ setActive('admin.reportForgettingCurve.*') }}">
+            {{-- <li class="{{ setActive('admin.reportForgettingCurve.*') }}">
                 <a href="{{ route('admin.reportForgettingCurve.index') }}" class="nav-link">
                     <i class="fa-solid fa-file-waveform"></i>
                     <span>Reporte curva del olvido</span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li class="dropdown {{ setActive('admin.surveys.*') }}">
+            {{-- <li class="dropdown {{ setActive('admin.surveys.*') }}">
                 <a href="javascript:void(0);" class="nav-link has-dropdown">
                     <i class="fa-solid fa-square-poll-vertical"></i>
                     <span>Encuestas</span>
@@ -180,14 +180,14 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
 
-            <li class="{{ setActive('admin.certifications.*') }}">
+            {{-- <li class="{{ setActive('admin.certifications.*') }}">
                 <a href="{{ route('admin.certifications.index') }}" class="nav-link">
                     <i class="fa-solid fa-file-contract"></i>
                     <span>Evaluaciones</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="{{ setActive('admin.filesManagement.*') }}">
                 <a href="{{ route('admin.filesManagement.index') }}" class="nav-link">

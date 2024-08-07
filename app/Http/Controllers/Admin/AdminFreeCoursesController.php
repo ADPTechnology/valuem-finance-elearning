@@ -91,11 +91,8 @@ class AdminFreeCoursesController extends Controller
 
         $sectionActive = '';
 
-        $companies = Company::get(['id', 'description']);
-
         return view('admin.free-courses.courses.index', [
             'course' => $course,
-            'companies' => $companies,
             'sectionActive' => $sectionActive
         ]);
     }

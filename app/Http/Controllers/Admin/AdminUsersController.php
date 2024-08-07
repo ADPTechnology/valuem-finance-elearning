@@ -9,11 +9,10 @@ use App\Http\Requests\FileImportRequest;
 use App\Http\Requests\UserRequest;
 use App\Imports\UsersImport;
 use App\Models\File;
-use App\Models\UserDetail;
 use App\Services\FileService;
 use App\Services\ParticipantService;
 use Illuminate\Http\Request;
-use App\Models\{User, Company, MiningUnit};
+use App\Models\{User};
 use App\Services\UserService;
 use Auth;
 use Exception;
@@ -37,32 +36,19 @@ class AdminUsersController extends Controller
             return $this->userService->getDataTable($request);
         } else {
 
-            $companies = Company::get(['id', 'description']);
-            $miningUnits = MiningUnit::get(['id', 'description']);
             $roles = config('parameters')['roles'];
 
             return view('admin.users.index',
                 compact(
-                    'miningUnits',
                     'roles',
-                    'companies'
                 )
             );
         }
     }
 
-    public function registerGetCompanies()
+    public function registerValidateEmail(Request $request)
     {
-        $companies = Company::get(['id', 'description']);
-
-        return response()->json([
-            "companies" => $companies
-        ]);
-    }
-
-    public function registerValidateDni(Request $request)
-    {
-        $valid = User::where('dni', $request['dni'])->first() == null ? "true" : "false";
+        $valid = User::where('email', $request['email'])->first() == null ? "true" : "false";
 
         return $valid;
     }
@@ -86,10 +72,10 @@ class AdminUsersController extends Controller
         ]);
     }
 
-    public function editValidateDni(Request $request)
+    public function editValidateEmail(Request $request)
     {
         $id = $request['id'];
-        $user = User::where('dni', $request['dni'])->first();
+        $user = User::where('email', $request['email'])->first();
 
         return $user == null ||
             $user->id == $id ?
@@ -101,15 +87,12 @@ class AdminUsersController extends Controller
         $user->loadAvatar();
 
         $role = config('parameters.roles')[$user->role] ?? '-';
-     
+
         $isAuth = $user->id == Auth::user()->id;
 
         return response([
             "user" => $user,
             "role" => $role,
-            "companies" => Company::get(['id', 'description']),
-            "miningUnits" => MiningUnit::get(['id', 'description']),
-            "miningUnitsSelect" => $user->miningUnits->pluck('id')->toArray(),
             "url_img" => verifyUserAvatar($user->file),
             "isAuth" => $isAuth,
         ]);
@@ -137,7 +120,6 @@ class AdminUsersController extends Controller
     {
         $success = false;
 
-        $user->miningUnits()->detach();
         $user->progressChapters()->detach();
 
         if ($user->userDetail()) {

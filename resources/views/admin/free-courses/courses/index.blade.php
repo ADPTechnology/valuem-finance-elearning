@@ -44,7 +44,7 @@
 
                         <div class="inner-title-container">
                             <div id="btn-drowdown-sections-list" class="btn-dropdown-container show">
-                                <h5 class="title-header-show"> Secciones </h5>
+                                <h5 class="title-header-show"> Módulos </h5>
                                 <div class="btn-row-container">
                                     <div>
                                         <span class="text-dropdown-cont">
@@ -59,7 +59,7 @@
                         <div class="mt-4 action-btn-dropdown-container outside show top-container-inner-box">
                             <button class="btn btn-primary" id="btn-register-section-modal" data-toggle="modal"
                                 data-target="#registerSectionModal">
-                                <i class="fa-solid fa-plus"></i> &nbsp; Añadir sección
+                                <i class="fa-solid fa-plus"></i> &nbsp; Añadir módulo
                             </button>
                         </div>
 
@@ -175,9 +175,8 @@
                                             <thead>
                                                 <tr>
                                                     <th>N°</th>
-                                                    <th>DNI</th>
+                                                    <th>Email</th>
                                                     <th>Participante</th>
-                                                    <th>Empresa</th>
                                                     <th>Estado</th>
                                                     <th>Nota</th>
                                                     <th>Habilitar curso</th>
@@ -192,9 +191,9 @@
                     </div>
                 </div>
 
-                <hr>
+                {{-- <hr> --}}
 
-                <div class="principal-splitted-container">
+                {{-- <div class="principal-splitted-container">
 
                     <div class="principal-inner-container right">
                         <div class="inner-title-container">
@@ -244,7 +243,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
 
                 <hr>
@@ -371,8 +370,8 @@
     @include('admin.free-courses.partials.modals._preview_chapter')
 
     {{-- EXAM --}}
-    @include('admin.free-courses.partials.modals._store_exam')
-    @include('admin.free-courses.partials.modals._edit_exam')
+    {{-- @include('admin.free-courses.partials.modals._store_exam')
+    @include('admin.free-courses.partials.modals._edit_exam') --}}
 
     {{-- EXAM TO SECTION --}}
     @include('admin.free-courses.partials.modals._assignExam')

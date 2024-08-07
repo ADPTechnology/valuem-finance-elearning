@@ -15,21 +15,13 @@ class UserService
 {
     public function getDataTable(Request $request)
     {
-        $query = User::with('company:id,description')
-            ->withCount(
+        $query = User::withCount(
                 [
-                    'events',
-                    'certifications',
                     'publishings',
-                    'userSurveys',
-                    'participantGroups',
-                    'webinarCertifications'
+                    'productCertifications'
                 ]
             );
 
-        if ($request->filled('company')) {
-            $query->where('company_id', $request['company']);
-        }
         if ($request->filled('active')) {
             if ($request['active'] == 'S') {
                 $query->where('active', 'S');
@@ -55,11 +47,6 @@ class UserService
             })
             ->editColumn('role', function ($user) {
                 return config('parameters.roles')[$user->role] ?? '-';
-            })
-            ->editColumn('company.description', function ($user) {
-                $company = $user->company->description ?? '-';
-
-                return $company;
             })
             ->addColumn('status-btn', function ($user) {
                 $status = $user->active == 'S' ? 'active' : 'inactive';
@@ -94,12 +81,8 @@ class UserService
                                 data-original-title="edit" class="edit btn btn-warning btn-sm
                                 editUser"><i class="fa-solid fa-pen-to-square"></i></button>';
                 if (
-                    $user->events_count == 0 &&
-                    $user->certifications_count == 0 &&
                     $user->publishings_count == 0 &&
-                    $user->user_surveys_count == 0 &&
-                    $user->participant_groups_count == 0 &&
-                    $user->webinar_certifications_count == 0 &&
+                    $user->product_certifications_count == 0 &&
                     $user->id != Auth::user()->id
                 ) {
                     $btn .= '<a href="javascript:void(0)" data-id="' .
@@ -128,8 +111,6 @@ class UserService
         ]);
 
         if ($user) {
-
-            $user->miningUnits()->sync($request['id_mining_units']);
 
             if ($request->hasFile('image')) {
 
@@ -167,8 +148,6 @@ class UserService
 
         if ($user->update($data)) {
 
-            $user->miningUnits()->sync($request['id_mining_units']);
-
             return $this->updateUserAvatar($request, $user, $storage);
         }
 
@@ -190,12 +169,10 @@ class UserService
         ]);
 
         if ($user) {
-            if ($user->miningUnits()->sync($request['mining_units_ids'])) {
 
-                app(EmailService::class)->sendUserCredentialsMail($user, $password);
+            app(EmailService::class)->sendUserCredentialsMail($user, $password);
 
-                return $user;
-            };
+            return $user;
         }
 
         throw new Exception(config('parameters.exception_message'));

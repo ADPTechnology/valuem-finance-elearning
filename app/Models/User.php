@@ -64,45 +64,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function certifications()
-    {
-        return $this->hasMany(Certification::class, 'user_id', 'id');
-    }
 
-    public function events()
-    {
-        return $this->hasMany(Event::class, 'user_id', 'id');
-    }
-
-    public function participantEvents()
-    {
-        return $this->belongsToMany(Event::class, Certification::class, 'user_id', 'event_id')->withTimestamps();
-    }
-
-    public function webinarCertifications()
-    {
-        return $this->hasMany(WebinarCertification::class, 'user_id');
-    }
-
-    public function responsableEvents()
-    {
-        return $this->hasMany(Event::class, 'responsable_id', 'id');
-    }
-
-    public function participantGroups()
-    {
-        return $this->belongsToMany(ParticipantGroup::class, 'group_participant', 'participant_id', 'group_id')->withTimestamps();
-    }
-
-    public function company()
-    {
-        return $this->belongsTo(Company::class, 'company_id', 'id');
-    }
-
-    public function miningUnits()
-    {
-        return $this->belongsToMany(MiningUnit::class, 'mining_units_users', 'user_id', 'mining_unit_id');
-    }
 
     public function publishings()
     {
@@ -113,11 +75,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(SectionChapter::class, 'user_course_progress', 'user_id', 'section_chapter_id')
             ->withPivot(['id', 'progress_time', 'last_seen', 'status'])->withTimestamps();
-    }
-
-    public function userSurveys()
-    {
-        return $this->hasMany(UserSurvey::class, 'user_id', 'id');
     }
 
     public function file()
@@ -171,7 +128,7 @@ class User extends Authenticatable
 
 
 
-    
+
 
     static function getInstructorsQuery()
     {

@@ -42,7 +42,7 @@
                     <i class="fa-solid fa-pen-to-square"></i>
                 </span>
 
-                @if ($section->section_chapters_count >= 1)
+                {{-- @if ($section->section_chapters_count >= 1)
                     <span class="section-question-btn question-btn"
                         data-send="{{ route('admin.freeCourses.sections.getExam', $section) }}"
                         data-url="{{ route('admin.freeCourses.sections.relationExam', $section) }}">
@@ -52,7 +52,7 @@
                     <span class="section-question-btn disabled">
                         <i class="fa-solid fa-clipboard-question"></i>
                     </span>
-                @endif
+                @endif --}}
 
 
                 @if ($section->section_chapters_count == 0)

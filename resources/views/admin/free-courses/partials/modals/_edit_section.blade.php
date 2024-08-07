@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="editSectionModalLabel">
                     <div class="section-title mt-0">
                         <i class="fa-solid fa-pen-to-square"></i> &nbsp;
-                        Editar sección
+                        Editar módulo
                     </div>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

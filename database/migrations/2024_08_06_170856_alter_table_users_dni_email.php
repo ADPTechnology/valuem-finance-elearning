@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCourseSectionsTable extends Migration
+class AlterTableUsersDniEmail extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateCourseSectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('course_sections', function (Blueprint $table) {
-            $table->id();
-            $table->string('title', 100);
-            $table->integer('section_order');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('email')->unique()->change();
         });
     }
 
@@ -28,6 +25,8 @@ class CreateCourseSectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('course_sections');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 }

@@ -23,10 +23,10 @@ class AdminController extends Controller
     {
 
         $users = User::count();
-        $company = Company::count();
+        $company = null;
         $courseRegular = Course::where('course_type', 'REGULAR')->count();
         $courseFree = Course::where('course_type', 'FREE')->count();
-        $events = Event::count();
+        $events = null;
 
         $approvedSuspended = $this->dashboardService->getStatusEvaluations();
         $typesOfUsers = $this->dashboardService->getTypeRole();

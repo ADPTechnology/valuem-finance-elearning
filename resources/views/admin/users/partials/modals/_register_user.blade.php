@@ -15,7 +15,7 @@
             </div>
 
             <form action="{{ route('admin.user.store') }}" id="registerUserForm" method="POST"
-                data-validate="{{ route('admin.users.validateDni') }}" enctype="multipart/form-data">
+                data-validate="{{ route('admin.users.validateEmail') }}" enctype="multipart/form-data">
                 @csrf
 
                 <div class="modal-body">
@@ -26,20 +26,7 @@
 
                             <div class="form-row">
 
-                                <div class="form-group col-md-6">
-                                    <label for="inputCompanyName">DNI *</label>
-                                    <div class="input-group">
-                                        <input type="text" name="dni" class="form-control dni"
-                                            placeholder="Ingrese dni">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <i class="fa-solid fa-id-card"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-12">
                                     <label for="inputCompanyName">Nombre *</label>
                                     <input type="text" name="name" class="form-control name"
                                         placeholder="Ingrese nombre del usuario">
@@ -112,50 +99,9 @@
                                 </div>
                             </div>
 
-
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>CIP (opcional)</label>
-                                    <input type="text" name="cip" class="form-control"
-                                        placeholder="Ingrese código CIP">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Empresa (opcional)</label>
-                                    <div class="input-group">
-                                        <select name="company_id" class="form-control select2"
-                                            id="registerCompanySelect">
-
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
 
                         <div class="col-6">
-
-                            <div class="form-row">
-                                <div class="form-group col-12">
-                                    <label> Unidades mineras (opcional)</label>
-                                    <select id="registerMiningUnitsSelect" name="id_mining_units[]"
-                                        class="form-control select2" multiple="multiple">
-                                        <option></option>
-                                        @foreach ($miningUnits as $miningUnit)
-                                            <option value="{{ $miningUnit->id }}">
-                                                {{ strtoupper($miningUnit->description) }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label>Cargo (opcional)</label>
-                                    <input type="text" name="position" class="form-control"
-                                        placeholder="Ingrese Cargo">
-                                </div>
-                            </div>
 
                             <div class="form-row">
                                 <div class="form-group col-12">

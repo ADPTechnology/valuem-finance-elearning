@@ -150,7 +150,7 @@ class LoginController extends Controller
 
     public function username()
     {
-        return 'dni';
+        return 'email';
     }
 
     /**

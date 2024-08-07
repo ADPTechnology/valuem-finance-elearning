@@ -16,13 +16,7 @@ class DashboardService
 
         $start = Carbon::now()->startOfMonth();
 
-        return Certification::with('event:id,min_score')
-            ->whereHas('event', function ($query) use ($start) {
-                $query->whereBetween('date', [$start, getCurrentDate()]);
-            })
-            ->where('evaluation_type', 'certification')
-            ->where('status', 'finished')
-            ->get(['id', 'event_id', 'score']);
+        return collect([]);
     }
 
     public function getStatusEvaluations()

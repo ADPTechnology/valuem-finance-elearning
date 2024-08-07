@@ -30,20 +30,6 @@
                     </div>
 
                     <div class="form-group col-2 p-0 select-group">
-                        <label class="form-label">Filtrar por empresa: &nbsp;</label>
-                        <div>
-                            <select name="company" class="form-control select2 select-filter-users"
-                                id="search_from_company_select">
-                                <option value=""> Todos </option>
-                                @foreach ($companies as $company)
-                                    <option value="{{ $company->id }}"> {{ $company->id }} - {{ $company->description }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-2 p-0 select-group">
                         <label class="form-label">Filtrar por rol: &nbsp;</label>
                         <div>
                             <select name="rol" class="form-control select2 select-filter-users"
@@ -74,14 +60,8 @@
 
 
                 <div class="mb-4">
-                    <button class="btn btn-primary" id="btn-register-user-modal"
-                        data-url='{{ route('admin.users.registerGetCompanies') }}'>
+                    <button class="btn btn-primary" id="btn-register-user-modal">
                         <i class="fa-solid fa-user-plus"></i> &nbsp; Registrar
-                    </button>
-
-                    <button class="btn btn-primary ms-4" id="btn-register-user-modal" data-toggle='modal'
-                        data-target="#RegisterUserMassiveModal">
-                        <i class="fa-solid fa-file-import"></i> &nbsp; Registro masivo
                     </button>
                 </div>
 
@@ -99,11 +79,9 @@
                     <thead>
                         <tr>
                             <th>N°</th>
-                            <th>DNI</th>
                             <th>Nombre</th>
                             <th>Email</th>
                             <th>Rol</th>
-                            <th>Empresa</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -130,6 +108,10 @@
 @endsection
 
 @section('extra-script')
+
+    <script type="module" src="{{ asset('assets/admin/js/users.js') }}"></script>
+
     <script type="module" src="{{ asset('assets/admin/js/page/users/docs.js') }}"></script>
     <script type="module" src="{{ asset('assets/admin/js/page/users/instructorInformation.js') }}"></script>
+
 @endsection

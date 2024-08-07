@@ -33,5 +33,4 @@ class Order extends Model
         return $this->morphedByMany(Course::class, 'orderable', 'order_details')
         ->withPivot(['quantity', 'unit_price'])->withTimestamps();
     }
-
 }

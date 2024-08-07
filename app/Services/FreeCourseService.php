@@ -185,7 +185,6 @@ class FreeCourseService
     {
         $query = $course->userProductCertifications()
             ->with([
-                'company',
                 'productCertifications' => function ($query) use ($course) {
                 $query->where('certificable_id', $course->id)->withCount('evaluations');
             }])
@@ -347,7 +346,6 @@ class FreeCourseService
 
     public function getUsersTableCourse(Request $request, Course $course)
     {
-
         $participants = $course->userProductCertifications()
             ->get(['user_id'])
             ->pluck('user_id')
@@ -356,12 +354,11 @@ class FreeCourseService
 
         $users = User::where('role', 'participants')
             ->whereNotIn('users.id', $participants)
-            ->with('company')
             ->select('users.*');
 
-        if ($request->filled('search_company')) {
-            $users = $users->where('company_id', $request['search_company']);
-        }
+        // if ($request->filled('search_company')) {
+        //     $users = $users->where('company_id', $request['search_company']);
+        // }
 
         $allUsers = DataTables::of($users)
             ->addColumn('choose', function ($user) {
@@ -371,9 +368,6 @@ class FreeCourseService
                                             <label for="checkbox-' . $user->id . '" class="custom-control-label checkbox-user-label">&nbsp;</label>
                                         </div>';
                 return $checkbox;
-            })
-            ->editColumn('company.description', function ($user) {
-                return $user->company->description ?? '-';
             })
             ->editColumn('user.name', function ($user) {
                 return $user->full_name;

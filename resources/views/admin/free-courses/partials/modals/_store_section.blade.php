@@ -7,7 +7,7 @@
                 <h5 class="modal-title" id="registerSectionModalLabel">
                     <div class="section-title mt-0">
                         <i class="fa-solid fa-square-plus"></i> &nbsp;
-                        Añadir sección
+                        Añadir módulo
                     </div>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

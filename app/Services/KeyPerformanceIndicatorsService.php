@@ -19,23 +19,8 @@ class KeyPerformanceIndicatorsService
         $idCompany = Auth::user()->company_id;
         $start = Carbon::now()->startOfMonth();
 
-        $query = Certification::with([
-            'event:id,date,min_score',
-        ])
-            ->where('company_id', $idCompany)
-            ->where('evaluation_type', 'certification')
-            ->where('status', 'finished')
-            ->whereHas('event', function ($query) use ($start) {
-                $query->select('id', 'date', 'min_score')->whereBetween('date', [$start, getCurrentDate()]);
-            });
 
-        if ($idCourse) {
-            $query->whereHas('event.exam.course', function ($query) use ($idCourse) {
-                $query->select('id')->where('id', $idCourse);
-            });
-        }
-
-        return $query->get(['id', 'event_id', 'score']);
+        return collect([]);
 
     }
 
@@ -97,33 +82,7 @@ class KeyPerformanceIndicatorsService
 
         $start = Carbon::now()->startOfMonth();
 
-        $query = UserSurvey::with([
-            'surveyAnswers' => function ($query) {
-                $query->where('statement_id', 44);
-            },
-            'event.course',
-        ])->where('status', 'finished');
-
-
-        if (!$isSupervisor) {
-            $idCompany = Auth::user()->company_id;
-            $query->where('company_id', $idCompany);
-        }
-
-        $query->whereBetween('date', [$start, getCurrentDate()])
-            ->whereHas('surveyAnswers', function ($query) {
-                $query->where('statement_id', 44);
-            });
-
-
-        if ($idCourse) {
-            $query->whereHas('event.course', function ($query) use ($idCourse) {
-                $query->where('courses.id', $idCourse);
-            });
-        }
-
-
-        return $query->get();
+        return collect([]);
 
     }
 
@@ -184,23 +143,8 @@ class KeyPerformanceIndicatorsService
     private function getFinishedCertificationSupervisor($idCourse = NULL)
     {
         $start = Carbon::now()->startOfMonth();
-        $query = Certification::with([
-            'event:id,date,min_score',
-        ])
-            ->where('evaluation_type', 'certification')
-            ->where('status', 'finished')
-            ->whereHas('event', function ($query) use ($start) {
-                $query->select('id', 'date', 'min_score')
-                    ->whereBetween('date', [$start, getCurrentDate()]);
-            });
 
-        if ($idCourse) {
-            $query->whereHas('event.exam.course', function ($query) use ($idCourse) {
-                $query->select('id')->where('id', $idCourse);
-            });
-        }
-
-        return $query->get(['id', 'event_id', 'score']);
+        return collect([]);
 
     }
 
