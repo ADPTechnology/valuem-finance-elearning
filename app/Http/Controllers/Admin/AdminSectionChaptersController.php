@@ -38,12 +38,15 @@ class AdminSectionChaptersController extends Controller
 
     public function getVideoData(SectionChapter $chapter)
     {
+        $chapter->loadVideo();
+
         $url_video = verifyFile($chapter->file);
 
         return response()->json([
             "url_video" => $url_video,
             "section" => $chapter->courseSection->title,
-            "chapter" => $chapter->title
+            "chapter" => $chapter->title,
+            "url_delete" => route('admin.freeCourses.chapters.deleteVideo', $chapter)
         ]);
     }
 
@@ -133,7 +136,6 @@ class AdminSectionChaptersController extends Controller
         ]);
     }
 
-
     public function destroy(Request $request, SectionChapter $chapter)
     {
         $chapter->loadRelationships();
@@ -171,8 +173,71 @@ class AdminSectionChaptersController extends Controller
             "message" => $message,
             "htmlCourse" => $htmlCourse,
             "htmlSection" => $htmlSection,
-            "htmlChapter" => $htmlChapter,
+            "htmlChapter" => $htmlChapter ?? null,
             "id" => $section->id
+        ]);
+    }
+
+    public function deleteVideo(SectionChapter $chapter)
+    {
+        $chapter->loadRelationships();
+
+        $storage = env('FILESYSTEM_DRIVER');
+
+        try {
+            $this->sectionChapterService->deleteVideo($chapter, $storage);
+            $success = true;
+        } catch (Exception $e) {
+            $success = false;
+        }
+
+        $message = getMessageFromSuccess($success, 'updated');
+
+        if ($success) {
+            $section = $chapter->courseSection;
+            $htmlChapter = view('admin.free-courses.partials.chapters-list', compact('section'))->render();
+        }
+
+        return response()->json([
+            "success" => $success,
+            "message" => $message,
+            "htmlChapter" => $htmlChapter ?? null,
+            "id" => $chapter->courseSection->id
+        ]);
+    }
+
+
+
+    // * ------------ CONTENT -------------
+
+    public function getContentDetail(SectionChapter $chapter)
+    {
+        $html = view('admin.free-courses.partials.components._content_chapter_form', compact('chapter'))->render();
+
+        return response()->json([
+            'chapter' => $chapter,
+            'html' => $html
+        ]);
+    }
+
+    public function updateContent(Request $request, SectionChapter $chapter)
+    {
+        try {
+            $this->sectionChapterService->updateContent($request, $chapter);
+            $success = true;
+        } catch (Exception $e) {
+            $success = false;
+        }
+
+        $message = getMessageFromSuccess($success, 'updated');
+
+        $html = view('admin.free-courses.partials.components._content_chapter_form', compact('chapter'))->render();
+
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+            'content' => $chapter->content,
+            'html' => $html
         ]);
     }
 }

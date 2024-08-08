@@ -6,15 +6,23 @@ use App\Models\{CourseSection, SectionChapter};
 use Datatables;
 use Exception;
 use Owenoj\LaravelGetId3\GetId3;
+use Request;
 
 class SectionChapterService
 {
     public function getDataTable($section_id)
     {
-        $allChapters = Datatables::of(
-            SectionChapter::where('section_id', $section_id)
+        $query = SectionChapter::where('section_id', $section_id)
+                                ->with([
+                                    'file' => fn($q) =>
+                                        $q->where('file_type', 'videos')
+                                ])
+                                ->withCount([
+                                    'files as files_general_count' => fn ($q) =>
+                                        $q->where('file_type', 'archivos')
+                                ]);
 
-        )
+        $allChapters = Datatables::of($query)
             ->editColumn('duration', function ($chapter) {
                 return $chapter->duration . ' minutos';
             })
@@ -26,27 +34,55 @@ class SectionChapterService
                 return $description;
             })
             ->addColumn('view', function ($chapter) {
-                return ' <a href="javascript:void(0);" class="preview-chapter-video-button"
-                            data-url="' . route('admin.freeCourses.chapters.getVideoData', $chapter) . '">
-                            <i class="fa-solid fa-video"></i>
-                        </a>';
+                if ($chapter->file) {
+                        $btn ='<a href="javascript:void(0);" class="preview-chapter-video-button"
+                                data-url="' . route('admin.freeCourses.chapters.getVideoData', $chapter) . '">
+                                <i class="fa-solid fa-video"></i>
+                            </a>';
+                }
+
+                return $btn ?? '-';
+            })
+            ->addColumn('content', function ($chapter) {
+
+                $btn = '<button data-id="' . $chapter->id . '"
+                            data-send="'. route('admin.freeCourses.chapters.getContentDetail', $chapter) .'"
+                            data-url="'. route('admin.freeCourses.chapters.updateContent', $chapter) .'"
+                            data-original-title="edit" class="me-3 edit btn btn-dark btn-sm
+                            showContentChapter-btn">
+                                <i class="fa-solid fa-person-chalkboard"></i>
+                        </button>';
+
+                $btn .= '<button data-id="' . $chapter->id . '"
+                            data-send=""
+                            data-url=""
+                            data-original-title="edit" class="me-3 edit btn btn-primary btn-sm
+                            showDocsChapter">
+                            <i class="fa-solid fa-file-lines"></i>
+                        </button>';
+
+                return $btn;
             })
             ->addColumn('action', function ($chapter) {
                 $btn = '<button data-id="' . $chapter->id . '"
                                     data-url="' . route('admin.freeCourses.chapters.update', $chapter) . '"
                                     data-send="' . route('admin.freeCourses.chapters.edit', $chapter) . '"
                                     data-original-title="edit" class="me-3 edit btn btn-warning btn-sm
-                                    editChapter"><i class="fa-solid fa-pen-to-square"></i></button>';
+                                    editChapter"><i class="fa-solid fa-pen-to-square"></i>
+                        </button>';
 
-                $btn .= '<button href="javascript:void(0)" data-id="' .
+                if ($chapter->files_general_count == 0) {
+
+                    $btn .= '<button href="javascript:void(0)" data-id="' .
                     $chapter->id . '" data-original-title="delete"
                                     data-url="' . route('admin.freeCourses.chapters.delete', $chapter) .
                     '" class="ms-3 delete btn btn-danger btn-sm
                                     deleteChapter"><i class="fa-solid fa-trash-can"></i></button>';
+                }
 
                 return $btn;
             })
-            ->rawColumns(['view', 'action'])
+            ->rawColumns(['view', 'content', 'action'])
             ->make(true);
 
         return $allChapters;
@@ -87,10 +123,10 @@ class SectionChapterService
                     $belongsTo,
                     $relation
                 );
-
-                return $chapter;
             }
         }
+
+        return $chapter;
 
         throw new Exception(config('parameters.exception_message'));
     }
@@ -174,5 +210,24 @@ class SectionChapterService
         }
 
         return true;
+    }
+
+
+    public function deleteVideo(SectionChapter $chapter, $storage)
+    {
+        if ($chapter->file) {
+            app(FileService::class)->destroy($chapter->file, $storage);
+
+            return true;
+        }
+
+        throw new Exception(config('parameters.exception_message'));
+    }
+
+    public function updateContent($request, SectionChapter $chapter)
+    {
+        return $chapter->update([
+            'content' => $request['content']
+        ]);
     }
 }

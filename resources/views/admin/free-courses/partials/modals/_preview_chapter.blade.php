@@ -19,6 +19,13 @@
 
             </div>
 
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-delete-video">
+                    <i class="fa-solid fa-trash me-1"></i>
+                    Eliminar video
+                </button>
+            </div>
+
         </div>
     </div>
 </div>

@@ -8,6 +8,7 @@ $(() => {
     /*-------------- INSTRUCTOR INFORMATION MODAL -----------------*/
 
     if ($("#viewInstructorInformationModal").length) {
+
         function getSummernoteConfig(summernoteElement, cardForm) {
             return {
                 dialogsInBody: true,

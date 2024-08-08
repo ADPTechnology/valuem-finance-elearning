@@ -520,7 +520,6 @@ $(() => {
                 },
                 allowOutsideClick: () => !Swal.isLoading()
             }).then((result) => {
-                console.log(result)
                 if (result.isConfirmed) {
                     Toast.fire({
                         icon: "success",

@@ -613,9 +613,16 @@ Route::group(['middleware' => ['auth', 'check.valid.user']], function () {
                         Route::get('/obtener-capítulos/{section}', 'getDataTable')->name('getDataTable');
                         Route::get('/editar/{chapter}', 'edit')->name('edit');
                         Route::get('/obtener-video/{chapter}', 'getVideoData')->name('getVideoData');
+
+                        Route::get('/obtener-contenido-capitulo/{chapter}', 'getContentDetail')->name('getContentDetail');
+
                         Route::post('/sección/{section}/registrar-capítulo', 'store')->name('store');
                         Route::post('/actualizar/{chapter}', 'update')->name('update');
                         Route::post('/capítulos/eliminar/{chapter}', 'destroy')->name('delete');
+
+                        Route::post('/actualizar-contenido/{chapter}', 'updateContent')->name('updateContent');
+
+                        Route::delete('/eliminar-video/{chapter}', 'deleteVideo')->name('deleteVideo');
                     });
                 });
 

@@ -9,14 +9,15 @@ use App\Models\{CourseSection, User};
 class SectionChapter extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'section_chapters';
     protected $fillable = [
         'title',
         'description',
         'chapter_order',
         'duration',
-        'section_id'
+        'section_id',
+        'content'
     ];
 
     public function courseSection()
@@ -29,7 +30,12 @@ class SectionChapter extends Model
         return $this->belongsToMany(User::class, 'user_course_progress', 'section_chapter_id', 'user_id')
                                     ->withPivot(['id', 'progress_time', 'last_seen', 'status'])->withTimestamps();
     }
-    
+
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
+    }
+
     public function file()
     {
         return $this->morphOne(File::class, 'fileable');
@@ -37,7 +43,11 @@ class SectionChapter extends Model
 
     public function loadRelationships()
     {
-        return $this->load(['courseSection', 'file']);
+        return $this->load([
+            'courseSection',
+            'file' => fn ($query) =>
+                $query->where('file_type', 'videos')
+        ]);
     }
 
     public function loadVideo()

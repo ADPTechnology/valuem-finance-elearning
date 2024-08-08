@@ -369,6 +369,8 @@
     {{-- -- PREVIEW VIDEO CHAPTER - --}}
     @include('admin.free-courses.partials.modals._preview_chapter')
 
+    @include('admin.free-courses.partials.modals._view_content_chapter')
+
     {{-- EXAM --}}
     {{-- @include('admin.free-courses.partials.modals._store_exam')
     @include('admin.free-courses.partials.modals._edit_exam') --}}
@@ -382,6 +384,7 @@
 
 @section('extra-script')
     <script src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
+    <script type="module" src="{{ asset('assets/admin/js/freeCourseChapters.js') }}"></script>
     <script type="module" src="{{ asset('assets/admin/js/page/freeCourses/files.js') }}"></script>
     <script type="module" src="{{ asset('assets/admin/js/page/freeCourses/exams.js') }}"></script>
     <script type="module" src="{{ asset('assets/admin/js/page/freeCourses/participants.js') }}"></script>

@@ -2484,16 +2484,16 @@ $(function () {
                         .find(".img-holder")
                         .html(
                             '<img class="img-fluid course_img" id="image-course-edit" src="' +
-                                data.url_img +
-                                '"></img>'
+                            data.url_img +
+                            '"></img>'
                         );
                     modal
                         .find("#input-course-image-update")
                         .attr(
                             "data-value",
                             '<img scr="' +
-                                data.url_img +
-                                '" class="img-fluid course_img"'
+                            data.url_img +
+                            '" class="img-fluid course_img"'
                         );
                     modal.find("#input-course-image-update").val("");
 
@@ -2958,16 +2958,16 @@ $(function () {
                         .find(".img-holder")
                         .html(
                             '<img class="img-fluid course_img" id="image-category-edit" src="' +
-                                data.url_img +
-                                '"></img>'
+                            data.url_img +
+                            '"></img>'
                         );
                     modal
                         .find("#image-upload-category-edit")
                         .attr(
                             "data-value",
                             '<img scr="' +
-                                data.url_img +
-                                '" class="img-fluid category_img"'
+                            data.url_img +
+                            '" class="img-fluid category_img"'
                         );
                     modal.find("#image-upload-category-edit").val("");
 
@@ -3265,10 +3265,10 @@ $(function () {
                     $.each(categories, function (key, values) {
                         select.append(
                             '<option value="' +
-                                values.id +
-                                '">' +
-                                values.description +
-                                "</option>"
+                            values.id +
+                            '">' +
+                            values.description +
+                            "</option>"
                         );
                     });
                 },
@@ -3460,16 +3460,16 @@ $(function () {
                         .find(".img-holder")
                         .html(
                             '<img class="img-fluid course_img" id="image-category-edit" src="' +
-                                data.url_img +
-                                '"></img>'
+                            data.url_img +
+                            '"></img>'
                         );
                     modal
                         .find("#image-upload-category-edit")
                         .attr(
                             "data-value",
                             '<img scr="' +
-                                data.url_img +
-                                '" class="img-fluid category_img"></img>'
+                            data.url_img +
+                            '" class="img-fluid category_img"></img>'
                         );
                     modal.find("#image-upload-category-edit").val("");
 
@@ -3777,6 +3777,7 @@ $(function () {
     // --------- FREE COURSE SHOW ---------
 
     if ($("#course-box-container").length) {
+
         function getSummernoteConfig(summernoteElement, cardForm) {
             return {
                 dialogsInBody: true,
@@ -3998,16 +3999,16 @@ $(function () {
                         .find(".img-holder")
                         .html(
                             '<img class="img-fluid course_img" id="image-course-edit" src="' +
-                                data.url_img +
-                                '"></img>'
+                            data.url_img +
+                            '"></img>'
                         );
                     modal
                         .find("#image-upload-freecourse-edit")
                         .attr(
                             "data-value",
                             '<img class="img-fluid course_img" id="image-course-edit" scr="' +
-                                data.url_img +
-                                '" >'
+                            data.url_img +
+                            '" >'
                         );
                     modal.find("#image-upload-freecourse-edit").val("");
 
@@ -4050,7 +4051,7 @@ $(function () {
 
         /* ----------- DELETE ---------------*/
 
-        $(".main-content").on("click", ".delete-course-btn", function () {
+        $("html").on("click", ".delete-course-btn", function () {
             var button = $(this);
             var url = button.data("url");
             var type = button.data("type");
@@ -4104,7 +4105,7 @@ $(function () {
 
         /* -------- UPDATE ORDER ----------*/
 
-        $(".main-content").on("change", ".order-section-select", function () {
+        $("html").on("change", ".order-section-select", function () {
             var url = $(this).data("url");
             var value = $(this).val();
 
@@ -4264,8 +4265,8 @@ $(function () {
                                 topTableInfo.html(
                                     '<span class="text-bold"> de: </span> \
                                                     <span class="title-chapter-top-table">' +
-                                        data.title +
-                                        "</span>"
+                                    data.title +
+                                    "</span>"
                                 );
                             }
 
@@ -4299,7 +4300,7 @@ $(function () {
             },
         });
 
-        $(".main-content").on("click", ".section-edit-btn", function () {
+        $("html").on("click", ".section-edit-btn", function () {
             var button = $(this);
             var getDataUrl = button.data("send");
             var url = button.data("url");
@@ -4323,10 +4324,10 @@ $(function () {
                     $.each(data.sections, function (key, values) {
                         select.append(
                             '<option value="' +
-                                values.section_order +
-                                '">' +
-                                values.section_order +
-                                "</option>"
+                            values.section_order +
+                            '">' +
+                            values.section_order +
+                            "</option>"
                         );
                     });
 
@@ -4449,7 +4450,7 @@ $(function () {
 
                     modal.modal("show");
                 },
-                complete: function (data) {},
+                complete: function (data) { },
                 error: function (data) {
                     console.log(data);
                 },
@@ -4537,7 +4538,7 @@ $(function () {
 
         /* -------- DELETE ----------*/
 
-        $(".main-content").on("click", ".delete-section-btn", function () {
+        $("html").on("click", ".delete-section-btn", function () {
             var button = $(this);
             var url = button.data("url");
             var active = button.closest(".course-section-box").data("active");
@@ -4608,745 +4609,842 @@ $(function () {
             );
         });
 
+
+
         /* ---------- CHAPTERS -----------*/
 
         /* ------- CHAPTERS TABLE ---------*/
 
-        function chapterTable(ele, lang, url) {
-            var chaptersTable = ele.DataTable({
-                responsive: true,
-                language: lang,
-                serverSide: true,
-                processing: true,
-                ajax: {
-                    url: url,
-                    data: {
-                        type: "table",
-                    },
-                },
-                order: [[3, "asc"]],
-                columns: [
-                    { data: "title", name: "title", className: "text-bold" },
-                    { data: "description", name: "description" },
-                    { data: "duration", name: "duration" },
-                    { data: "chapter_order", name: "chapter_order" },
-                    {
-                        data: "view",
-                        name: "view",
-                        orderable: false,
-                        searchable: false,
-                        className: "text-center",
-                    },
-                    {
-                        data: "action",
-                        name: "action",
-                        orderable: false,
-                        searchable: false,
-                        className: "action-with",
-                    },
-                ],
-                dom: "rtip",
-            });
-        }
-
-        /* ----- SET ACTIVE -----*/
-
-        $("html").on(
-            "click",
-            ".course-section-box .title-container",
-            function () {
-                var sectionBox = $(this).closest(".course-section-box");
-
-                if (!sectionBox.hasClass("active")) {
-                    sectionBox.addClass("active").attr("data-active", "active");
-                    sectionBox
-                        .siblings()
-                        .removeClass("active")
-                        .attr("data-active", "");
-
-                    var url = sectionBox.data("table");
-
-                    $.ajax({
-                        type: "GET",
-                        url: url,
-                        data: {
-                            type: "html",
-                        },
-                        dataType: "JSON",
-                        success: function (data) {
-                            var chaptersBox = $("#chapters-list-container");
-                            var topTableInfo = $(
-                                "#top-chapter-table-title-info"
-                            );
-
-                            topTableInfo.html(
-                                '<span class="text-bold"> de: </span> \
-                                            <span class="title-chapter-top-table">' +
-                                    data.title +
-                                    "</span>"
-                            );
-                            chaptersBox.html(data.html);
-
-                            var chaptersTableEle = $(
-                                "#freeCourses-chapters-table"
-                            );
-                            chapterTable(chaptersTableEle, DataTableEs, url);
-                        },
-                        error: function (result) {
-                            console.log(result);
-                            Toast.fire({
-                                icon: "error",
-                                title: "¡Ocurrió un error inesperado!",
-                            });
-                        },
-                    });
-                }
-            }
-        );
-
-        /*-------  REGISTER  ------*/
-
-        var registerChapterForm = $("#registerChapterForm").validate({
-            rules: {
-                title: {
-                    required: true,
-                    maxlength: 100,
-                },
-                description: {
-                    required: true,
-                    maxlength: 500,
-                },
-            },
-        });
-
-        /*----- STORE DATA -------*/
-
-        $("html").on(
-            "click",
-            "#btn-register-chapter-modal",
-            function () {
-                var button = $(this);
-                var url = button.data("url");
-                var modal = $("#registerChapterModal");
-                var form = $("#registerChapterForm");
-                var loadSpinner = form.find(".loadSpinner");
-
-                if (
-                    !$("#input-chapter-video-container").hasClass(
-                        "dz-clickable"
-                    )
-                ) {
-                    var chapterVideoInput = $(
-                        "#input-chapter-video-container"
-                    ).dropzone({
-                        url: url,
-                        headers: {
-                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                                "content"
-                            ),
-                        },
-                        paramName: "file",
-                        addRemoveLinks: true,
-                        uploadMultiple: false,
-                        autoProcessQueue: false,
-                        maxFiles: 1,
-                        hiddenInputContainer: "#input-chapter-video-container",
-                        maxfilesexceeded: function (file) {
-                            this.removeAllFiles();
-                            this.addFile(file);
-                        },
-                        accept: function (file, done) {
-                            // $("#registerChapterForm")
-                            //     .find(".message-file-invalid")
-                            //     .removeClass("show");
-                            if (!file.type.match("video/*")) {
-                                Toast.fire({
-                                    icon: "warning",
-                                    text: "¡Solo puedes subir videos!",
-                                });
-                                this.removeFile(file);
-                                return false;
-                            }
-                            if (file.size > 150 * 1024 * 1024) {
-                                Toast.fire({
-                                    icon: "warning",
-                                    text: "¡Tu archivo pesa más de 50MB!",
-                                });
-                                this.removeFile(file);
-                                return false;
-                            }
-                            return done();
-                        },
-                        init: function () {
-                            var myDropzone = this;
-
-                            myDropzone.on("processing", function (file) {
-                                this.options.url = $(
-                                    "#btn-register-chapter-modal"
-                                ).data("url");
-                            });
-
-                            $("#registerChapterForm").on(
-                                "submit",
-                                function (e) {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    // var messageInvalid = $(this).find(
-                                    //     ".message-file-invalid"
-                                    // );
-
-                                    if ($("#registerChapterForm").valid()) {
-                                        if (
-                                            myDropzone.getQueuedFiles().length == 1
-                                        ) {
-                                            // messageInvalid.removeClass("show");
-                                            // if ($("#registerChapterForm").valid()) {
-                                                myDropzone.processQueue();
-                                            // }
-                                        } else {
-                                            myDropzone.removeAllFiles();
-                                            loadSpinner.toggleClass("active");
-                                            form.find(".btn-save").attr(
-                                                "disabled",
-                                                "disabled"
-                                            );
-
-                                            $.ajax({
-                                                method: form.attr("method"),
-                                                url: url,
-                                                data: form.serialize(),
-                                                dataType: "JSON",
-                                                success: function (data) {
-                                                    if (data.success) {
-
-                                                        let urlTable = $(
-                                                            "#section-box-" + response.id
-                                                        ).data("table");
-
-                                                        this.removeAllFiles();
-                                                        registerChapterForm.resetForm();
-                                                        form.trigger("reset");
-
-                                                        var chaptersBox = $("#chapters-list-container");
-                                                        var sectionsBox = $("#sections-list-container");
-                                                        var courseBox = $("#course-box-container");
-
-                                                        chaptersBox.html(response.htmlChapter);
-                                                        sectionsBox.html(response.htmlSection);
-                                                        courseBox.html(response.htmlCourse);
-
-                                                        $(".order-section-select").select2({
-                                                            minimumResultsForSearch: -1,
-                                                        });
-
-                                                        var chaptersTableEle = $(
-                                                            "#freeCourses-chapters-table"
-                                                        );
-                                                        chapterTable(
-                                                            chaptersTableEle,
-                                                            DataTableEs,
-                                                            urlTable
-                                                        );
-
-                                                        Toast.fire({
-                                                            icon: "success",
-                                                            text: response.message,
-                                                        });
-                                                    } else {
-                                                        Toast.fire({
-                                                            icon: "error",
-                                                            text: data.message,
-                                                        });
-                                                    }
-
-                                                    modal.modal("hide");
-                                                },
-                                                complete: function (data) {
-                                                    loadSpinner.toggleClass("active");
-                                                    form.find(".btn-save").removeAttr(
-                                                        "disabled"
-                                                    );
-                                                },
-                                                error: function (data) {
-                                                    console.log(data);
-                                                },
-                                            });
-
-                                            // messageInvalid.addClass("show");
-                                        }
-                                    }
-
-
-                                }
-                            );
-                        },
-                        sending: function (file, xhr, formData) {
-                            let title = form.find("input[name=title]").val();
-                            let description = form
-                                .find("#description-text-area-register")
-                                .val();
-
-                            let sectionActive = $("#sections-list-container")
-                                .find(".course-section-box.active")
-                                .data("id");
-
-                            formData.append("title", title);
-                            formData.append("description", description);
-                            formData.append("sectionActive", sectionActive);
-
-                            loadSpinner.toggleClass("active");
-                            form.find(".btn-save").attr("disabled", "disabled");
-                        },
-                        success: function (file, response) {
-
-                            if (response.success) {
-                                let urlTable = $(
-                                    "#section-box-" + response.id
-                                ).data("table");
-
-                                this.removeAllFiles();
-                                registerChapterForm.resetForm();
-                                form.trigger("reset");
-
-                                var chaptersBox = $("#chapters-list-container");
-                                var sectionsBox = $("#sections-list-container");
-                                var courseBox = $("#course-box-container");
-
-                                chaptersBox.html(response.htmlChapter);
-                                sectionsBox.html(response.htmlSection);
-                                courseBox.html(response.htmlCourse);
-
-                                $(".order-section-select").select2({
-                                    minimumResultsForSearch: -1,
-                                });
-
-                                var chaptersTableEle = $(
-                                    "#freeCourses-chapters-table"
-                                );
-                                chapterTable(
-                                    chaptersTableEle,
-                                    DataTableEs,
-                                    urlTable
-                                );
-
-                                Toast.fire({
-                                    icon: "success",
-                                    text: response.message,
-                                });
-                            } else {
-                                Toast.fire({
-                                    icon: "error",
-                                    text: response.message,
-                                });
-                            }
-
-                            modal.modal("hide");
-                            loadSpinner.toggleClass("active");
-                        },
-                        complete: function () {
-                            form.find(".btn-save").removeAttr("disabled");
-                        },
-                        error: function (file, response) {
-                            console.log(response);
-                        },
-                    });
-                }
-            }
-        );
-
-        /*--------- EDIT ............*/
-
-        $("#editOrderSelectChapter").select2({
-            dropdownParent: $("#editChapterModal"),
-            minimumResultsForSearch: -1,
-        });
-
-        var editChapterForm = $("#editChapterForm").validate({
-            rules: {
-                title: {
-                    required: true,
-                    maxlength: 100,
-                },
-                description: {
-                    required: true,
-                    maxlength: 500,
-                },
-            },
-        });
-
-        $("html").on("click", ".editChapter", function () {
-            var button = $(this);
-            var modal = $("#editChapterModal");
-            var getDataUrl = button.data("send");
-            var url = button.data("url");
-            var form = $("#editChapterForm");
-            var loadSpinner = form.find(".loadSpinner");
-
-            $("#editOrderSelectChapter").html("");
-
-            button
-                .closest("tr")
-                .siblings()
-                .find(".editChapter")
-                .removeClass("active");
-            button.addClass("active");
-
-            if (
-                !$("#input-chapter-video-container-edit").hasClass(
-                    "dz-clickable"
-                )
-            ) {
-                let chapterVideoInputEdit = $(
-                    "#input-chapter-video-container-edit"
-                ).dropzone({
-                    url: url,
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                            "content"
-                        ),
-                    },
-                    paramName: "file",
-                    addRemoveLinks: true,
-                    uploadMultiple: false,
-                    autoProcessQueue: false,
-                    maxFiles: 1,
-                    hiddenInputContainer: "#input-chapter-video-container-edit",
-                    maxfilesexceeded: function (file) {
-                        this.removeAllFiles();
-                        this.addFile(file);
-                    },
-                    accept: function (file, done) {
-                        if (!file.type.match("video/*")) {
-                            Toast.fire({
-                                icon: "warning",
-                                text: "¡Solo puedes subir videos!",
-                            });
-                            this.removeFile(file);
-                            return false;
-                        }
-                        if (file.size > 150 * 1024 * 1024) {
-                            Toast.fire({
-                                icon: "warning",
-                                text: "¡Tu archivo pesa más de 50MB!",
-                            });
-                            this.removeFile(file);
-                            return false;
-                        }
-                        return done();
-                    },
-                    init: function () {
-                        var myDropzone = this;
-
-                        $("#editChapterForm").on("submit", function (e) {
-                            e.preventDefault();
-                            e.stopPropagation();
-
-                            let urlChanged = $(".editChapter.active").data(
-                                "url"
-                            );
-
-                            myDropzone.options.url = urlChanged;
-
-                            if ($("#editChapterForm").valid()) {
-                                if (myDropzone.getQueuedFiles().length == 1) {
-                                    myDropzone.processQueue();
-                                } else {
-                                    myDropzone.removeAllFiles();
-
-                                    loadSpinner.toggleClass("active");
-                                    form.find(".btn-save").attr(
-                                        "disabled",
-                                        "disabled"
-                                    );
-
-                                    $.ajax({
-                                        method: form.attr("method"),
-                                        url: urlChanged,
-                                        data: form.serialize(),
-                                        dataType: "JSON",
-                                        success: function (data) {
-                                            if (data.success) {
-                                                let urlTable = $(
-                                                    "#section-box-" + data.id
-                                                ).data("table");
-                                                let chaptersBox = $(
-                                                    "#chapters-list-container"
-                                                );
-
-                                                chaptersBox.html(
-                                                    data.htmlChapter
-                                                );
-
-                                                let chaptersTableEle = $(
-                                                    "#freeCourses-chapters-table"
-                                                );
-                                                chapterTable(
-                                                    chaptersTableEle,
-                                                    DataTableEs,
-                                                    urlTable
-                                                );
-
-                                                editChapterForm.resetForm();
-                                                form.trigger("reset");
-
-                                                Toast.fire({
-                                                    icon: "success",
-                                                    text: data.message,
-                                                });
-                                            } else {
-                                                Toast.fire({
-                                                    icon: "error",
-                                                    text: data.message,
-                                                });
-                                            }
-                                        },
-                                        complete: function (data) {
-                                            loadSpinner.toggleClass("active");
-                                            $("#editChapterModal").modal(
-                                                "hide"
-                                            );
-                                            form.find(".btn-save").removeAttr(
-                                                "disabled"
-                                            );
-                                        },
-                                        error: function (data) {
-                                            console.log(data);
-                                        },
-                                    });
-                                }
-                            }
-                        });
-                    },
-                    sending: function (file, xhr, formData) {
-                        let title = form.find("input[name=title]").val();
-                        let description = form
-                            .find("#description-text-area-edit")
-                            .val();
-                        let order = form.find("#editOrderSelectChapter").val();
-
-                        formData.append("title", title);
-                        formData.append("description", description);
-                        formData.append("chapter_order", order);
-
-                        loadSpinner.toggleClass("active");
-                        form.find(".btn-save").attr("disabled", "disabled");
-                    },
-                    success: function (file, response) {
-                        this.removeAllFiles();
-
-                        if (response.success) {
-                            let urlTable = $(
-                                "#section-box-" + response.id
-                            ).data("table");
-                            let chaptersBox = $("#chapters-list-container");
-                            let courseBox = $("#course-box-container");
-
-                            courseBox.html(response.htmlCourse);
-                            chaptersBox.html(response.htmlChapter);
-
-                            var chaptersTableEle = $(
-                                "#freeCourses-chapters-table"
-                            );
-                            chapterTable(
-                                chaptersTableEle,
-                                DataTableEs,
-                                urlTable
-                            );
-
-                            editChapterForm.resetForm();
-                            form.trigger("reset");
-
-                            Toast.fire({
-                                icon: "success",
-                                text: response.message,
-                            });
-                        } else {
-                            Toast.fire({
-                                icon: "error",
-                                text: response.message,
-                            });
-                        }
-
-                        modal.modal("hide");
-                        loadSpinner.toggleClass("active");
-                    },
-                    complete: function () {
-                        form.find(".btn-save").removeAttr("disabled");
-                    },
-                    error: function (file, response) {
-                        console.log(response);
-                    },
-                });
-            }
-
-            $.ajax({
-                type: "GET",
-                url: getDataUrl,
-                dataType: "JSON",
-                success: function (data) {
-                    var chapter = data.chapter;
-                    form.find("input[name=title]").val(chapter.title);
-                    form.find("#description-text-area-edit").val(
-                        chapter.description
-                    );
-
-                    var select = $("#editOrderSelectChapter");
-
-                    select.select2({
-                        dropdownParent: $("#editChapterModal"),
-                        minimumResultsForSearch: -1,
-                    });
-
-                    $.each(data.chapters_list, function (key, values) {
-                        select.append(
-                            '<option value="' +
-                                values.chapter_order +
-                                '">' +
-                                values.chapter_order +
-                                "</option>"
-                        );
-                    });
-
-                    select.val(chapter.chapter_order).change();
-                },
-                complete: function (data) {
-                    modal.modal("show");
-                },
-                error: function (data) {
-                    console.log(data);
-                },
-            });
-        });
-
-        /* -------- PREVIEW VIDEO ---------*/
-
-        $("html").on(
-            "click",
-            ".preview-chapter-video-button",
-            function (e) {
-                e.preventDefault();
-
-                var modal = $("#previewChapterModal");
-                var url = $(this).data("url");
-                var video_container = $("#video-chapter-container");
-                video_container.html(
-                    '<video id="chapter-video" class="video-js chapter-video"></video>'
-                );
-
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    dataType: "JSON",
-                    success: function (data) {
-                        modal.find(".title-preview-section").html(data.section);
-                        modal.find(".title-preview-chapter").html(data.chapter);
-
-                        var playerChapter = videojs("chapter-video", {
-                            controls: true,
-                            fluid: true,
-                            playbackRates: [0.5, 1, 1.5, 2],
-                            autoplay: false,
-                            preload: "auto",
-                        });
-
-                        playerChapter.src(data.url_video);
-
-                        modal.modal("toggle");
-                    },
-                    error: function (data) {
-                        console.log(data);
-                    },
-                });
-            }
-        );
-
-        $("#previewChapterModal").on("hidden.bs.modal", function () {
-            videojs("chapter-video").dispose();
-        });
-
-        /* -------- DELETE ----------*/
-
-        $(".main-content").on("click", ".deleteChapter", function () {
-            var button = $(this);
-            var url = button.data("url");
-
-            var sectionActive = $("#sections-list-container")
-                .find(".course-section-box.active")
-                .data("id");
-
-            Swal.fire({
-                title: "¡Cuidado!",
-                text: "¡Esto también eliminará el progreso de los usuarios!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Continuar y eliminar",
-                cancelButtonText: "Cancelar",
-                reverseButtons: true,
-            }).then(
-                function (e) {
-                    if (e.value === true) {
-                        $.ajax({
-                            method: "POST",
-                            url: url,
-                            data: {
-                                id: sectionActive,
-                            },
-                            dataType: "JSON",
-                            success: function (data) {
-                                if (data.success) {
-                                    var courseBox = $("#course-box-container");
-                                    var sectionBox = $(
-                                        "#sections-list-container"
-                                    );
-                                    var chaptersBox = $(
-                                        "#chapters-list-container"
-                                    );
-
-                                    courseBox.html(data.htmlCourse);
-                                    sectionBox.html(data.htmlSection);
-                                    chaptersBox.html(data.htmlChapter);
-
-                                    let urlTable = $(
-                                        "#section-box-" + data.id
-                                    ).data("table");
-                                    var chaptersTableEle = $(
-                                        "#freeCourses-chapters-table"
-                                    );
-                                    chapterTable(
-                                        chaptersTableEle,
-                                        DataTableEs,
-                                        urlTable
-                                    );
-
-                                    $(".order-section-select").select2({
-                                        minimumResultsForSearch: -1,
-                                    });
-
-                                    Toast.fire({
-                                        icon: "success",
-                                        text: data.message,
-                                    });
-                                } else {
-                                    Toast.fire({
-                                        icon: "error",
-                                        text: data.message,
-                                    });
-                                }
-                            },
-                            error: function (result) {
-                                console.log(result);
-                                ToastError.fire();
-                            },
-                        });
-                    } else {
-                        e.dismiss;
-                    }
-                },
-                function (dismiss) {
-                    return false;
-                }
-            );
-        });
+        // function chapterTable(ele, lang, url) {
+
+        //     var chaptersTable = ele.DataTable({
+        //         responsive: true,
+        //         language: lang,
+        //         serverSide: true,
+        //         processing: true,
+        //         ajax: {
+        //             url: url,
+        //             data: {
+        //                 type: "table",
+        //             },
+        //         },
+        //         order: [[3, "asc"]],
+        //         columns: [
+        //             { data: "title", name: "title", className: "text-bold" },
+        //             { data: "description", name: "description" },
+        //             { data: "duration", name: "duration" },
+        //             { data: "chapter_order", name: "chapter_order" },
+        //             {
+        //                 data: "view",
+        //                 name: "view",
+        //                 orderable: false,
+        //                 searchable: false,
+        //                 className: "text-center",
+        //             },
+        //             { data: "content", name: "content", orderable: false, searchable: false, className: "action-with text-center" },
+        //             {
+        //                 data: "action",
+        //                 name: "action",
+        //                 orderable: false,
+        //                 searchable: false,
+        //                 className: "action-with",
+        //             },
+        //         ],
+        //         dom: "rtip",
+        //     });
+        // }
+
+        // /* ----- SET ACTIVE -----*/
+
+        // $("html").on(
+        //     "click",
+        //     ".course-section-box .title-container",
+        //     function () {
+        //         var sectionBox = $(this).closest(".course-section-box");
+
+        //         if (!sectionBox.hasClass("active")) {
+        //             sectionBox.addClass("active").attr("data-active", "active");
+        //             sectionBox
+        //                 .siblings()
+        //                 .removeClass("active")
+        //                 .attr("data-active", "");
+
+        //             var url = sectionBox.data("table");
+
+        //             $.ajax({
+        //                 type: "GET",
+        //                 url: url,
+        //                 data: {
+        //                     type: "html",
+        //                 },
+        //                 dataType: "JSON",
+        //                 success: function (data) {
+        //                     var chaptersBox = $("#chapters-list-container");
+        //                     var topTableInfo = $(
+        //                         "#top-chapter-table-title-info"
+        //                     );
+
+        //                     topTableInfo.html(
+        //                         '<span class="text-bold"> de: </span> \
+        //                                     <span class="title-chapter-top-table">' +
+        //                         data.title +
+        //                         "</span>"
+        //                     );
+        //                     chaptersBox.html(data.html);
+
+        //                     var chaptersTableEle = $(
+        //                         "#freeCourses-chapters-table"
+        //                     );
+        //                     chapterTable(chaptersTableEle, DataTableEs, url);
+        //                 },
+        //                 error: function (result) {
+        //                     // console.log(result);
+        //                     Toast.fire({
+        //                         icon: "error",
+        //                         title: "¡Ocurrió un error inesperado!",
+        //                     });
+        //                 },
+        //             });
+        //         }
+        //     }
+        // );
+
+        // /*-------  REGISTER  ------*/
+
+        // var registerChapterForm = $("#registerChapterForm").validate({
+        //     rules: {
+        //         title: {
+        //             required: true,
+        //             maxlength: 100,
+        //         },
+        //         description: {
+        //             required: true,
+        //             maxlength: 500,
+        //         },
+        //     },
+        // });
+
+        // /*----- STORE DATA -------*/
+
+        // $("html").on(
+        //     "click",
+        //     "#btn-register-chapter-modal",
+        //     function () {
+        //         var button = $(this);
+        //         var url = button.data("url");
+        //         var modal = $("#registerChapterModal");
+        //         var form = $("#registerChapterForm");
+        //         var loadSpinner = form.find(".loadSpinner");
+
+        //         if (
+        //             !$("#input-chapter-video-container").hasClass(
+        //                 "dz-clickable"
+        //             )
+        //         ) {
+        //             var chapterVideoInput = $(
+        //                 "#input-chapter-video-container"
+        //             ).dropzone({
+        //                 url: url,
+        //                 headers: {
+        //                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+        //                         "content"
+        //                     ),
+        //                 },
+        //                 paramName: "file",
+        //                 addRemoveLinks: true,
+        //                 uploadMultiple: false,
+        //                 autoProcessQueue: false,
+        //                 maxFiles: 1,
+        //                 hiddenInputContainer: "#input-chapter-video-container",
+        //                 maxfilesexceeded: function (file) {
+        //                     this.removeAllFiles();
+        //                     this.addFile(file);
+        //                 },
+        //                 accept: function (file, done) {
+        //                     // $("#registerChapterForm")
+        //                     //     .find(".message-file-invalid")
+        //                     //     .removeClass("show");
+        //                     if (!file.type.match("video/*")) {
+        //                         Toast.fire({
+        //                             icon: "warning",
+        //                             text: "¡Solo puedes subir videos!",
+        //                         });
+        //                         this.removeFile(file);
+        //                         return false;
+        //                     }
+        //                     if (file.size > 150 * 1024 * 1024) {
+        //                         Toast.fire({
+        //                             icon: "warning",
+        //                             text: "¡Tu archivo pesa más de 50MB!",
+        //                         });
+        //                         this.removeFile(file);
+        //                         return false;
+        //                     }
+        //                     return done();
+        //                 },
+        //                 init: function () {
+        //                     var myDropzone = this;
+
+        //                     myDropzone.on("processing", function (file) {
+        //                         this.options.url = $(
+        //                             "#btn-register-chapter-modal"
+        //                         ).data("url");
+        //                     });
+
+        //                     $("#registerChapterForm").on(
+        //                         "submit",
+        //                         function (e) {
+        //                             e.preventDefault();
+        //                             e.stopPropagation();
+        //                             // var messageInvalid = $(this).find(
+        //                             //     ".message-file-invalid"
+        //                             // );
+
+        //                             if ($("#registerChapterForm").valid()) {
+        //                                 if (
+        //                                     myDropzone.getQueuedFiles().length >= 1
+        //                                 ) {
+        //                                     // messageInvalid.removeClass("show");
+        //                                     // if ($("#registerChapterForm").valid()) {
+        //                                     myDropzone.processQueue();
+        //                                     // }
+        //                                 } else {
+
+        //                                     myDropzone.removeAllFiles();
+
+        //                                     loadSpinner.toggleClass("active");
+
+        //                                     form.find(".btn-save").attr(
+        //                                         "disabled",
+        //                                         "disabled"
+        //                                     );
+        //                                     let sectionActive = $("#sections-list-container")
+        //                                         .find(".course-section-box.active")
+        //                                         .data("id");
+
+        //                                     let formData = form.serializeArray();
+        //                                     formData.push({ name: "sectionActive", value: sectionActive })
+
+        //                                     $.ajax({
+        //                                         method: form.attr("method"),
+        //                                         url: url,
+        //                                         data: formData,
+        //                                         dataType: "JSON",
+        //                                         success: function (data) {
+        //                                             if (data.success) {
+
+        //                                                 let urlTable = $(
+        //                                                     "#section-box-" + data.id
+        //                                                 ).data("table");
+
+        //                                                 registerChapterForm.resetForm();
+        //                                                 form.trigger("reset");
+
+        //                                                 var chaptersBox = $("#chapters-list-container");
+        //                                                 var sectionsBox = $("#sections-list-container");
+        //                                                 var courseBox = $("#course-box-container");
+
+        //                                                 chaptersBox.html(data.htmlChapter);
+        //                                                 sectionsBox.html(data.htmlSection);
+        //                                                 courseBox.html(data.htmlCourse);
+
+        //                                                 $(".order-section-select").select2({
+        //                                                     minimumResultsForSearch: -1,
+        //                                                 });
+
+        //                                                 var chaptersTableEle = $(
+        //                                                     "#freeCourses-chapters-table"
+        //                                                 );
+        //                                                 chapterTable(
+        //                                                     chaptersTableEle,
+        //                                                     DataTableEs,
+        //                                                     urlTable
+        //                                                 );
+
+        //                                                 Toast.fire({
+        //                                                     icon: "success",
+        //                                                     text: data.message,
+        //                                                 });
+        //                                             } else {
+        //                                                 Toast.fire({
+        //                                                     icon: "error",
+        //                                                     text: data.message,
+        //                                                 });
+        //                                             }
+
+        //                                             modal.modal("hide");
+        //                                         },
+        //                                         complete: function (data) {
+        //                                             loadSpinner.toggleClass("active");
+        //                                             form.find(".btn-save").removeAttr(
+        //                                                 "disabled"
+        //                                             );
+        //                                         },
+        //                                         error: function (data) {
+        //                                             console.log(data);
+        //                                         },
+        //                                     });
+
+        //                                     // messageInvalid.addClass("show");
+        //                                 }
+        //                             }
+
+
+        //                         }
+        //                     );
+        //                 },
+        //                 sending: function (file, xhr, formData) {
+        //                     let title = form.find("input[name=title]").val();
+        //                     let description = form
+        //                         .find("#description-text-area-register")
+        //                         .val();
+
+        //                     let sectionActive = $("#sections-list-container")
+        //                         .find(".course-section-box.active")
+        //                         .data("id");
+
+        //                     formData.append("title", title);
+        //                     formData.append("description", description);
+        //                     formData.append("sectionActive", sectionActive);
+
+        //                     loadSpinner.toggleClass("active");
+        //                     form.find(".btn-save").attr("disabled", "disabled");
+        //                 },
+        //                 success: function (file, response) {
+
+        //                     if (response.success) {
+        //                         let urlTable = $(
+        //                             "#section-box-" + response.id
+        //                         ).data("table");
+
+        //                         this.removeAllFiles();
+        //                         registerChapterForm.resetForm();
+        //                         form.trigger("reset");
+
+        //                         var chaptersBox = $("#chapters-list-container");
+        //                         var sectionsBox = $("#sections-list-container");
+        //                         var courseBox = $("#course-box-container");
+
+        //                         chaptersBox.html(response.htmlChapter);
+        //                         sectionsBox.html(response.htmlSection);
+        //                         courseBox.html(response.htmlCourse);
+
+        //                         $(".order-section-select").select2({
+        //                             minimumResultsForSearch: -1,
+        //                         });
+
+        //                         var chaptersTableEle = $(
+        //                             "#freeCourses-chapters-table"
+        //                         );
+        //                         chapterTable(
+        //                             chaptersTableEle,
+        //                             DataTableEs,
+        //                             urlTable
+        //                         );
+
+        //                         Toast.fire({
+        //                             icon: "success",
+        //                             text: response.message,
+        //                         });
+        //                     } else {
+        //                         Toast.fire({
+        //                             icon: "error",
+        //                             text: response.message,
+        //                         });
+        //                     }
+
+        //                     modal.modal("hide");
+        //                     loadSpinner.toggleClass("active");
+        //                 },
+        //                 complete: function () {
+        //                     form.find(".btn-save").removeAttr("disabled");
+        //                 },
+        //                 error: function (file, response) {
+        //                     console.log(response);
+        //                 },
+        //             });
+        //         }
+        //     }
+        // );
+
+        // /*--------- EDIT ............*/
+
+        // $("#editOrderSelectChapter").select2({
+        //     dropdownParent: $("#editChapterModal"),
+        //     minimumResultsForSearch: -1,
+        // });
+
+        // var editChapterForm = $("#editChapterForm").validate({
+        //     rules: {
+        //         title: {
+        //             required: true,
+        //             maxlength: 100,
+        //         },
+        //         description: {
+        //             required: true,
+        //             maxlength: 500,
+        //         },
+        //     },
+        // });
+
+        // $("html").on("click", ".editChapter", function () {
+        //     var button = $(this);
+        //     var modal = $("#editChapterModal");
+        //     var getDataUrl = button.data("send");
+        //     var url = button.data("url");
+        //     var form = $("#editChapterForm");
+        //     var loadSpinner = form.find(".loadSpinner");
+
+        //     $("#editOrderSelectChapter").html("");
+
+        //     button
+        //         .closest("tr")
+        //         .siblings()
+        //         .find(".editChapter")
+        //         .removeClass("active");
+        //     button.addClass("active");
+
+        //     if (
+        //         !$("#input-chapter-video-container-edit").hasClass(
+        //             "dz-clickable"
+        //         )
+        //     ) {
+        //         let chapterVideoInputEdit = $(
+        //             "#input-chapter-video-container-edit"
+        //         ).dropzone({
+        //             url: url,
+        //             headers: {
+        //                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+        //                     "content"
+        //                 ),
+        //             },
+        //             paramName: "file",
+        //             addRemoveLinks: true,
+        //             uploadMultiple: false,
+        //             autoProcessQueue: false,
+        //             maxFiles: 1,
+        //             hiddenInputContainer: "#input-chapter-video-container-edit",
+        //             maxfilesexceeded: function (file) {
+        //                 this.removeAllFiles();
+        //                 this.addFile(file);
+        //             },
+        //             accept: function (file, done) {
+        //                 if (!file.type.match("video/*")) {
+        //                     Toast.fire({
+        //                         icon: "warning",
+        //                         text: "¡Solo puedes subir videos!",
+        //                     });
+        //                     this.removeFile(file);
+        //                     return false;
+        //                 }
+        //                 if (file.size > 150 * 1024 * 1024) {
+        //                     Toast.fire({
+        //                         icon: "warning",
+        //                         text: "¡Tu archivo pesa más de 50MB!",
+        //                     });
+        //                     this.removeFile(file);
+        //                     return false;
+        //                 }
+        //                 return done();
+        //             },
+        //             init: function () {
+        //                 var myDropzone = this;
+
+        //                 $("#editChapterForm").on("submit", function (e) {
+        //                     e.preventDefault();
+        //                     e.stopPropagation();
+
+        //                     let urlChanged = $(".editChapter.active").data(
+        //                         "url"
+        //                     );
+
+        //                     myDropzone.options.url = urlChanged;
+
+        //                     if ($("#editChapterForm").valid()) {
+        //                         if (myDropzone.getQueuedFiles().length == 1) {
+        //                             myDropzone.processQueue();
+        //                         } else {
+        //                             myDropzone.removeAllFiles();
+
+        //                             loadSpinner.toggleClass("active");
+        //                             form.find(".btn-save").attr(
+        //                                 "disabled",
+        //                                 "disabled"
+        //                             );
+
+        //                             $.ajax({
+        //                                 method: form.attr("method"),
+        //                                 url: urlChanged,
+        //                                 data: form.serialize(),
+        //                                 dataType: "JSON",
+        //                                 success: function (data) {
+        //                                     if (data.success) {
+        //                                         let urlTable = $(
+        //                                             "#section-box-" + data.id
+        //                                         ).data("table");
+        //                                         let chaptersBox = $(
+        //                                             "#chapters-list-container"
+        //                                         );
+
+        //                                         chaptersBox.html(
+        //                                             data.htmlChapter
+        //                                         );
+
+        //                                         let chaptersTableEle = $(
+        //                                             "#freeCourses-chapters-table"
+        //                                         );
+
+        //                                         chapterTable(
+        //                                             chaptersTableEle,
+        //                                             DataTableEs,
+        //                                             urlTable
+        //                                         );
+
+        //                                         editChapterForm.resetForm();
+        //                                         form.trigger("reset");
+
+        //                                         Toast.fire({
+        //                                             icon: "success",
+        //                                             text: data.message,
+        //                                         });
+        //                                     } else {
+        //                                         Toast.fire({
+        //                                             icon: "error",
+        //                                             text: data.message,
+        //                                         });
+        //                                     }
+        //                                 },
+        //                                 complete: function (data) {
+        //                                     loadSpinner.toggleClass("active");
+        //                                     $("#editChapterModal").modal(
+        //                                         "hide"
+        //                                     );
+        //                                     form.find(".btn-save").removeAttr(
+        //                                         "disabled"
+        //                                     );
+        //                                 },
+        //                                 error: function (data) {
+        //                                     console.log(data);
+        //                                 },
+        //                             });
+        //                         }
+        //                     }
+        //                 });
+        //             },
+        //             sending: function (file, xhr, formData) {
+        //                 let title = form.find("input[name=title]").val();
+        //                 let description = form
+        //                     .find("#description-text-area-edit")
+        //                     .val();
+        //                 let order = form.find("#editOrderSelectChapter").val();
+
+        //                 formData.append("title", title);
+        //                 formData.append("description", description);
+        //                 formData.append("chapter_order", order);
+
+        //                 loadSpinner.toggleClass("active");
+        //                 form.find(".btn-save").attr("disabled", "disabled");
+        //             },
+        //             success: function (file, response) {
+        //                 this.removeAllFiles();
+
+        //                 if (response.success) {
+        //                     let urlTable = $(
+        //                         "#section-box-" + response.id
+        //                     ).data("table");
+        //                     let chaptersBox = $("#chapters-list-container");
+        //                     let courseBox = $("#course-box-container");
+
+        //                     courseBox.html(response.htmlCourse);
+        //                     chaptersBox.html(response.htmlChapter);
+
+        //                     var chaptersTableEle = $(
+        //                         "#freeCourses-chapters-table"
+        //                     );
+
+        //                     chapterTable(
+        //                         chaptersTableEle,
+        //                         DataTableEs,
+        //                         urlTable
+        //                     );
+
+        //                     editChapterForm.resetForm();
+        //                     form.trigger("reset");
+
+        //                     Toast.fire({
+        //                         icon: "success",
+        //                         text: response.message,
+        //                     });
+        //                 } else {
+        //                     Toast.fire({
+        //                         icon: "error",
+        //                         text: response.message,
+        //                     });
+        //                 }
+
+        //                 modal.modal("hide");
+        //                 loadSpinner.toggleClass("active");
+        //             },
+        //             complete: function () {
+        //                 form.find(".btn-save").removeAttr("disabled");
+        //             },
+        //             error: function (file, response) {
+        //                 console.log(response);
+        //             },
+        //         });
+        //     }
+
+        //     $.ajax({
+        //         type: "GET",
+        //         url: getDataUrl,
+        //         dataType: "JSON",
+        //         success: function (data) {
+        //             var chapter = data.chapter;
+        //             form.find("input[name=title]").val(chapter.title);
+        //             form.find("#description-text-area-edit").val(
+        //                 chapter.description
+        //             );
+
+        //             var select = $("#editOrderSelectChapter");
+
+        //             select.select2({
+        //                 dropdownParent: $("#editChapterModal"),
+        //                 minimumResultsForSearch: -1,
+        //             });
+
+        //             $.each(data.chapters_list, function (key, values) {
+        //                 select.append(
+        //                     '<option value="' +
+        //                     values.chapter_order +
+        //                     '">' +
+        //                     values.chapter_order +
+        //                     "</option>"
+        //                 );
+        //             });
+
+        //             select.val(chapter.chapter_order).change();
+        //         },
+        //         complete: function (data) {
+        //             modal.modal("show");
+        //         },
+        //         error: function (data) {
+        //             console.log(data);
+        //         },
+        //     });
+        // });
+
+        // /* -------- PREVIEW VIDEO ---------*/
+
+        // $("html").on(
+        //     "click",
+        //     ".preview-chapter-video-button",
+        //     function (e) {
+        //         e.preventDefault();
+
+        //         var modal = $("#previewChapterModal");
+        //         var url = $(this).data("url");
+        //         var video_container = $("#video-chapter-container");
+        //         video_container.html(
+        //             '<video id="chapter-video" class="video-js chapter-video"></video>'
+        //         );
+
+        //         $.ajax({
+        //             type: "GET",
+        //             url: url,
+        //             dataType: "JSON",
+        //             success: function (data) {
+        //                 modal.find(".title-preview-section").html(data.section);
+        //                 modal.find(".title-preview-chapter").html(data.chapter);
+
+        //                 let urlDelete = data.url_delete
+        //                 let btnDeleteVideo = modal.find('.btn-delete-video')
+
+        //                 btnDeleteVideo.attr('data-url', urlDelete)
+
+        //                 var playerChapter = videojs("chapter-video", {
+        //                     controls: true,
+        //                     fluid: true,
+        //                     playbackRates: [0.5, 1, 1.5, 2],
+        //                     autoplay: false,
+        //                     preload: "auto",
+        //                 });
+
+        //                 playerChapter.src(data.url_video);
+
+        //                 modal.modal("show");
+        //             },
+        //             error: function (data) {
+        //                 console.log(data);
+        //             },
+        //         });
+        //     }
+        // );
+
+        // $("#previewChapterModal").on("hidden.bs.modal", function () {
+        //     videojs("chapter-video").dispose();
+        // });
+
+        // /* -------- DELETE ----------*/
+
+        // $("html").on("click", ".deleteChapter", function () {
+        //     var button = $(this);
+        //     var url = button.data("url");
+
+        //     var sectionActive = $("#sections-list-container")
+        //         .find(".course-section-box.active")
+        //         .data("id");
+
+        //     Swal.fire({
+        //         title: "¡Cuidado!",
+        //         text: "¡Esto también eliminará el progreso de los usuarios!",
+        //         icon: "warning",
+        //         showCancelButton: true,
+        //         confirmButtonText: "Continuar y eliminar",
+        //         cancelButtonText: "Cancelar",
+        //         reverseButtons: true,
+        //     }).then(
+        //         function (e) {
+        //             if (e.value === true) {
+        //                 $.ajax({
+        //                     method: "POST",
+        //                     url: url,
+        //                     data: {
+        //                         id: sectionActive,
+        //                     },
+        //                     dataType: "JSON",
+        //                     success: function (data) {
+        //                         if (data.success) {
+
+        //                             var courseBox = $("#course-box-container");
+        //                             var sectionBox = $(
+        //                                 "#sections-list-container"
+        //                             );
+        //                             var chaptersBox = $(
+        //                                 "#chapters-list-container"
+        //                             );
+
+        //                             courseBox.html(data.htmlCourse);
+        //                             sectionBox.html(data.htmlSection);
+        //                             chaptersBox.html(data.htmlChapter);
+
+        //                             let urlTable = $(
+        //                                 "#section-box-" + data.id
+        //                             ).data("table");
+
+        //                             var chaptersTableEle = $(
+        //                                 "#freeCourses-chapters-table"
+        //                             );
+
+        //                             chapterTable(
+        //                                 chaptersTableEle,
+        //                                 DataTableEs,
+        //                                 urlTable
+        //                             );
+
+        //                             $(".order-section-select").select2({
+        //                                 minimumResultsForSearch: -1,
+        //                             });
+
+        //                             Toast.fire({
+        //                                 icon: "success",
+        //                                 text: data.message,
+        //                             });
+        //                         } else {
+        //                             Toast.fire({
+        //                                 icon: "error",
+        //                                 text: data.message,
+        //                             });
+        //                         }
+        //                     },
+        //                     error: function (result) {
+        //                         ToastError.fire();
+        //                     },
+        //                 });
+        //             } else {
+        //                 e.dismiss;
+        //             }
+        //         },
+        //         function (dismiss) {
+        //             return false;
+        //         }
+        //     );
+        // });
+
+        // // * ----------- DELETE VIDEO -------------
+
+        // $('html').on('click', '.btn-delete-video', function () {
+
+        //     var button = $(this)
+        //     let url = button.data('url')
+        //     var modal = $('#previewChapterModal')
+
+        //     Swal.fire({
+        //         title: "¿Estás seguro?",
+        //         text: "¡Esta acción no podrá ser revertida!",
+        //         icon: "warning",
+        //         showCancelButton: true,
+        //         confirmButtonText: "¡Sí!",
+        //         cancelButtonText: "Cancelar",
+        //         cancelButtonColor: "#161616",
+        //         confirmButtonColor: "#de1a2b",
+        //         showLoaderOnConfirm: true,
+        //         reverseButtons: true,
+        //         preConfirm: async () => {
+        //             return new Promise(function (resolve, reject) {
+
+        //                 $.ajax({
+        //                     type: "DELETE",
+        //                     url: url,
+        //                     dataType: "JSON",
+        //                     success: function (result) {
+
+        //                         if (result.success) {
+        //                             var chaptersBox = $(
+        //                                 "#chapters-list-container"
+        //                             );
+
+        //                             chaptersBox.html(result.htmlChapter);
+
+        //                             let urlTable = $(
+        //                                 "#section-box-" + result.id
+        //                             ).data("table");
+
+        //                             var chaptersTableEle = $(
+        //                                 "#freeCourses-chapters-table"
+        //                             );
+
+        //                             chapterTable(
+        //                                 chaptersTableEle,
+        //                                 DataTableEs,
+        //                                 urlTable
+        //                             );
+        //                         }
+
+        //                     },
+        //                     error: function (result) {
+        //                         // Swal.showValidationMessage(`
+        //                         //     Request failed: ${result}
+        //                         //   `);
+        //                         ToastError.fire();
+        //                     },
+        //                 });
+        //                 setTimeout(function () {
+        //                     resolve();
+        //                 }, 500);
+        //             })
+        //         },
+        //         allowOutsideClick: () => !Swal.isLoading()
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             modal.modal('hide')
+        //             Toast.fire({
+        //                 icon: "success",
+        //                 text: "¡Registro actualizado!",
+        //             });
+        //         }
+        //     });
+        // })
+
     }
 
     // ------------ EXAMS  INDEX -----------------
@@ -5597,10 +5695,10 @@ $(function () {
                     $.each(data.ownerCompanies, function (key, values) {
                         companySelect.append(
                             '<option value="' +
-                                values.id +
-                                '">' +
-                                values.name +
-                                "</option>"
+                            values.id +
+                            '">' +
+                            values.name +
+                            "</option>"
                         );
                     });
                     companySelect.val(exam.owner_company_id).change();
@@ -5826,10 +5924,10 @@ $(function () {
                     $.each(data.ownerCompanies, function (key, values) {
                         companySelect.append(
                             '<option value="' +
-                                values.id +
-                                '">' +
-                                values.name +
-                                "</option>"
+                            values.id +
+                            '">' +
+                            values.name +
+                            "</option>"
                         );
                     });
                     companySelect.val(exam.owner_company_id).change();
@@ -6124,16 +6222,16 @@ $(function () {
                         .find(".img-holder")
                         .html(
                             '<img class="img-fluid course_img" id="image-category-edit" src="' +
-                                data.url_img +
-                                '"></img>'
+                            data.url_img +
+                            '"></img>'
                         );
                     modal
                         .find("#image-upload-category-edit")
                         .attr(
                             "data-value",
                             '<img scr="' +
-                                data.url_img +
-                                '" class="img-fluid category_img"'
+                            data.url_img +
+                            '" class="img-fluid category_img"'
                         );
                     modal.find("#image-upload-category-edit").val("");
 
@@ -6433,8 +6531,8 @@ $(function () {
 
                     $("#statement-fill-blank").val(
                         currentVal.substring(0, match_start) +
-                            "" +
-                            currentVal.substring(match_end + 1)
+                        "" +
+                        currentVal.substring(match_end + 1)
                     );
                 }
             }
@@ -6606,10 +6704,10 @@ $(function () {
             if (value != "") {
                 input.val(
                     value.slice(0, curPos) +
-                        " [ " +
-                        "_".repeat(11) +
-                        " ] " +
-                        value.slice(curPos)
+                    " [ " +
+                    "_".repeat(11) +
+                    " ] " +
+                    value.slice(curPos)
                 );
                 input.caretTo(curPos + 17);
             }
@@ -6908,9 +7006,9 @@ $(function () {
                     } else {
                         $("#date-range-input-event").val(
                             "Del: " +
-                                start.format("YYYY-MM-DD") +
-                                " hasta el: " +
-                                end.format("YYYY-MM-DD")
+                            start.format("YYYY-MM-DD") +
+                            " hasta el: " +
+                            end.format("YYYY-MM-DD")
                         );
                     }
 
@@ -7162,10 +7260,10 @@ $(function () {
                             $.each(data.types, function (key, values) {
                                 typeSelect.append(
                                     '<option value="' +
-                                        key +
-                                        '">' +
-                                        values +
-                                        "</option>"
+                                    key +
+                                    '">' +
+                                    values +
+                                    "</option>"
                                 );
                             });
 
@@ -7173,12 +7271,12 @@ $(function () {
                             $.each(data.instructors, function (key, values) {
                                 instructorSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.name +
-                                        " " +
-                                        values.paternal +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.name +
+                                    " " +
+                                    values.paternal +
+                                    "</option>"
                                 );
                             });
 
@@ -7186,12 +7284,12 @@ $(function () {
                             $.each(data.responsables, function (key, values) {
                                 responsableSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.name +
-                                        " " +
-                                        values.paternal +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.name +
+                                    " " +
+                                    values.paternal +
+                                    "</option>"
                                 );
                             });
 
@@ -7199,10 +7297,10 @@ $(function () {
                             $.each(data.rooms, function (key, values) {
                                 roomSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.description +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.description +
+                                    "</option>"
                                 );
                             });
 
@@ -7210,10 +7308,10 @@ $(function () {
                             $.each(data.ownerCompanies, function (key, values) {
                                 ownerCompanySelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.name +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.name +
+                                    "</option>"
                                 );
                             });
 
@@ -7221,10 +7319,10 @@ $(function () {
                             $.each(data.exams, function (key, values) {
                                 examSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.title +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.title +
+                                    "</option>"
                                 );
                             });
 
@@ -7232,10 +7330,10 @@ $(function () {
                             $.each(data.examsTest, function (key, values) {
                                 testExamSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.title +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.title +
+                                    "</option>"
                                 );
                             });
 
@@ -7243,10 +7341,10 @@ $(function () {
                             $.each(data.eLearnings, function (key, values) {
                                 elearningSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.title +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.title +
+                                    "</option>"
                                 );
                             });
 
@@ -7579,10 +7677,10 @@ $(function () {
                             $.each(all.types, function (key, values) {
                                 typeSelect.append(
                                     '<option value="' +
-                                        key +
-                                        '">' +
-                                        values +
-                                        "</option>"
+                                    key +
+                                    '">' +
+                                    values +
+                                    "</option>"
                                 );
                             });
                             typeSelect.val(event.type).change();
@@ -7591,12 +7689,12 @@ $(function () {
                             $.each(all.instructors, function (key, values) {
                                 instructorSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.name +
-                                        " " +
-                                        values.paternal +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.name +
+                                    " " +
+                                    values.paternal +
+                                    "</option>"
                                 );
                             });
                             instructorSelect.val(event.user_id).change();
@@ -7605,12 +7703,12 @@ $(function () {
                             $.each(all.responsables, function (key, values) {
                                 responsableSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.name +
-                                        " " +
-                                        values.paternal +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.name +
+                                    " " +
+                                    values.paternal +
+                                    "</option>"
                                 );
                             });
                             responsableSelect
@@ -7621,10 +7719,10 @@ $(function () {
                             $.each(all.rooms, function (key, values) {
                                 roomSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.description +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.description +
+                                    "</option>"
                                 );
                             });
                             roomSelect.val(event.room_id).change();
@@ -7633,10 +7731,10 @@ $(function () {
                             $.each(all.ownerCompanies, function (key, values) {
                                 ownerCompanySelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.name +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.name +
+                                    "</option>"
                                 );
                             });
                             ownerCompanySelect
@@ -7647,10 +7745,10 @@ $(function () {
                             $.each(all.exams, function (key, values) {
                                 examSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.title +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.title +
+                                    "</option>"
                                 );
                             });
                             examSelect.val(event.exam_id).change();
@@ -7659,10 +7757,10 @@ $(function () {
                             $.each(all.examsTest, function (key, values) {
                                 testExamSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.title +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.title +
+                                    "</option>"
                                 );
                             });
                             testExamSelect.val(event.test_exam_id).change();
@@ -7671,10 +7769,10 @@ $(function () {
                             $.each(all.eLearnings, function (key, values) {
                                 elearningSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.title +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.title +
+                                    "</option>"
                                 );
                             });
                             elearningSelect.val(event.elearning_id).change();
@@ -7736,7 +7834,7 @@ $(function () {
                         let questQty = event["exam"].questions_count;
                         let maxScore = Math.round(
                             event.questions_qty *
-                                event["exam"].questions_avg_points
+                            event["exam"].questions_avg_points
                         );
 
                         form.find("#info-qty-questions").html(
@@ -8231,10 +8329,10 @@ $(function () {
                             $.each(all.types, function (key, values) {
                                 typeSelect.append(
                                     '<option value="' +
-                                        key +
-                                        '">' +
-                                        values +
-                                        "</option>"
+                                    key +
+                                    '">' +
+                                    values +
+                                    "</option>"
                                 );
                             });
                             typeSelect.val(event.type).change();
@@ -8243,12 +8341,12 @@ $(function () {
                             $.each(all.instructors, function (key, values) {
                                 instructorSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.name +
-                                        " " +
-                                        values.paternal +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.name +
+                                    " " +
+                                    values.paternal +
+                                    "</option>"
                                 );
                             });
                             instructorSelect.val(event.user_id).change();
@@ -8257,12 +8355,12 @@ $(function () {
                             $.each(all.responsables, function (key, values) {
                                 responsableSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.name +
-                                        " " +
-                                        values.paternal +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.name +
+                                    " " +
+                                    values.paternal +
+                                    "</option>"
                                 );
                             });
                             responsableSelect
@@ -8273,10 +8371,10 @@ $(function () {
                             $.each(all.rooms, function (key, values) {
                                 roomSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.description +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.description +
+                                    "</option>"
                                 );
                             });
                             roomSelect.val(event.room_id).change();
@@ -8285,10 +8383,10 @@ $(function () {
                             $.each(all.ownerCompanies, function (key, values) {
                                 ownerCompanySelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.name +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.name +
+                                    "</option>"
                                 );
                             });
                             ownerCompanySelect
@@ -8299,10 +8397,10 @@ $(function () {
                             $.each(all.exams, function (key, values) {
                                 examSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.title +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.title +
+                                    "</option>"
                                 );
                             });
                             examSelect.val(event.exam_id).change();
@@ -8311,10 +8409,10 @@ $(function () {
                             $.each(all.examsTest, function (key, values) {
                                 testExamSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.title +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.title +
+                                    "</option>"
                                 );
                             });
                             testExamSelect.val(event.test_exam_id).change();
@@ -8323,10 +8421,10 @@ $(function () {
                             $.each(all.eLearnings, function (key, values) {
                                 elearningSelect.append(
                                     '<option value="' +
-                                        values.id +
-                                        '">' +
-                                        values.title +
-                                        "</option>"
+                                    values.id +
+                                    '">' +
+                                    values.title +
+                                    "</option>"
                                 );
                             });
                             elearningSelect.val(event.elearning_id).change();
@@ -8384,7 +8482,7 @@ $(function () {
                         let questQty = event["exam"].questions_count;
                         let maxScore = Math.round(
                             event.questions_qty *
-                                event["exam"].questions_avg_points
+                            event["exam"].questions_avg_points
                         );
 
                         form.find("#info-qty-questions").html(
@@ -8855,29 +8953,29 @@ $(function () {
                     bodyParticipant.html(
                         "<tr> \
                                             <td>" +
-                            participant.id +
-                            "</td>\
+                        participant.id +
+                        "</td>\
                                             <td>" +
-                            participant.dni +
-                            "</td>\
+                        participant.dni +
+                        "</td>\
                                             <td>" +
-                            participant.name +
-                            '</td>\
+                        participant.name +
+                        '</td>\
                                             <td class="p-0">' +
-                            miningUnits +
-                            "</td>\
+                        miningUnits +
+                        "</td>\
                                             <td>" +
-                            participant.email +
-                            "</td>\
+                        participant.email +
+                        "</td>\
                                             <td>" +
-                            participant.company["description"] +
-                            "</td>\
+                        participant.company["description"] +
+                        "</td>\
                                             <td>" +
-                            (participant.position ?? "-") +
-                            "</td>\
+                        (participant.position ?? "-") +
+                        "</td>\
                                             <td>" +
-                            partStatus +
-                            "</td>\
+                        partStatus +
+                        "</td>\
                                         </tr>"
                     );
 
@@ -8894,26 +8992,26 @@ $(function () {
                     bodyEvent.html(
                         "<tr> \
                                         <td>" +
-                            event.id +
-                            "</td>\
+                        event.id +
+                        "</td>\
                                         <td>" +
-                            event.description +
-                            "</td>\
+                        event.description +
+                        "</td>\
                                         <td>" +
-                            event.date +
-                            "</td>\
+                        event.date +
+                        "</td>\
                                         <td>" +
-                            eventStatus +
-                            "</td>\
+                        eventStatus +
+                        "</td>\
                                         <td>" +
-                            event.exam["title"] +
-                            "</td>\
+                        event.exam["title"] +
+                        "</td>\
                                         <td>" +
-                            examStatus +
-                            "</td>\
+                        examStatus +
+                        "</td>\
                                         <td>" +
-                            event["course"].description +
-                            "</td>\
+                        event["course"].description +
+                        "</td>\
                                     </tr>"
                     );
 
@@ -8924,29 +9022,29 @@ $(function () {
                     bodyCertification.html(
                         "<tr> \
                                                 <td>" +
-                            (certification.start_time ?? "-") +
-                            "</td>\
+                        (certification.start_time ?? "-") +
+                        "</td>\
                                                 <td>" +
-                            (certification.end_time ?? "-") +
-                            "</td>\
+                        (certification.end_time ?? "-") +
+                        "</td>\
                                                 <td>" +
-                            (certification.total_time ?? "-") +
-                            "</td>\
+                        (certification.total_time ?? "-") +
+                        "</td>\
                                                 <td>" +
-                            (certification.score ?? "-") +
-                            '</td>\
+                        (certification.score ?? "-") +
+                        '</td>\
                                                 <td>\
                                                     <span class="status ' +
-                            certification.status +
-                            '"> \
+                        certification.status +
+                        '"> \
                                                         ' +
-                            certification.status_txt +
-                            " \
+                        certification.status_txt +
+                        " \
                                                     </span> \
                                                 </td>\
                                                 <td>" +
-                            assistUser +
-                            "</td>\
+                        assistUser +
+                        "</td>\
                                             </tr>"
                     );
                 },
@@ -9062,10 +9160,10 @@ $(function () {
                     $.each(all.miningUnits, function (key, value) {
                         miningUnitsSelect.append(
                             '<option value="' +
-                                value.id +
-                                '">' +
-                                value.description +
-                                "</option>"
+                            value.id +
+                            '">' +
+                            value.description +
+                            "</option>"
                         );
                     });
                     miningUnitsSelect.val(selected.miningUnits).change();
@@ -9074,10 +9172,10 @@ $(function () {
                     $.each(all.companies, function (key, value) {
                         companySelect.append(
                             '<option value="' +
-                                value.id +
-                                '">' +
-                                value.description +
-                                "</option>"
+                            value.id +
+                            '">' +
+                            value.description +
+                            "</option>"
                         );
                     });
                     companySelect.val(selected["company"].id).change();
@@ -9765,16 +9863,16 @@ $(function () {
                         .find(".img-holder")
                         .html(
                             '<img class="img-fluid card_img" id="image-card-edit" src="' +
-                                data.url_img +
-                                '"></img>'
+                            data.url_img +
+                            '"></img>'
                         );
                     modal
                         .find("#input-card-image-edit")
                         .attr(
                             "data-value",
                             '<img scr="' +
-                                data.url_img +
-                                '" class="img-fluid card_img"></img>'
+                            data.url_img +
+                            '" class="img-fluid card_img"></img>'
                         );
                     modal.find("#input-card-image-edit").val("");
 
@@ -10167,16 +10265,16 @@ $(function () {
                         .find(".img-holder")
                         .html(
                             '<img class="img-fluid survey_img" id="image-survey-edit" src="' +
-                                data.url_img +
-                                '"></img>'
+                            data.url_img +
+                            '"></img>'
                         );
                     modal
                         .find("#input-image-survey-edit")
                         .attr(
                             "data-value",
                             '<img scr="' +
-                                data.url_img +
-                                '" class="img-fluid survey_img"'
+                            data.url_img +
+                            '" class="img-fluid survey_img"'
                         );
                     modal.find("#input-image-survey-edit").val("");
 
@@ -10920,9 +11018,9 @@ $(function () {
                         inputEndDate.val(end.format("YYYY-MM-DD"));
                         $("#date-range-input-surveys").val(
                             "Del: " +
-                                start.format("YYYY-MM-DD") +
-                                " hasta el: " +
-                                end.format("YYYY-MM-DD")
+                            start.format("YYYY-MM-DD") +
+                            " hasta el: " +
+                            end.format("YYYY-MM-DD")
                         );
                     }
 
@@ -11033,9 +11131,9 @@ $(function () {
                         inputEndDate.val(end.format("YYYY-MM-DD"));
                         $("#date-range-input-surveys").val(
                             "Del: " +
-                                start.format("YYYY-MM-DD") +
-                                " hasta el: " +
-                                end.format("YYYY-MM-DD")
+                            start.format("YYYY-MM-DD") +
+                            " hasta el: " +
+                            end.format("YYYY-MM-DD")
                         );
                     }
 
@@ -11191,9 +11289,9 @@ $(function () {
                     } else {
                         $("#date-range-input-certifications").val(
                             "Del: " +
-                                start.format("YYYY-MM-DD") +
-                                " hasta el: " +
-                                end.format("YYYY-MM-DD")
+                            start.format("YYYY-MM-DD") +
+                            " hasta el: " +
+                            end.format("YYYY-MM-DD")
                         );
                     }
 
