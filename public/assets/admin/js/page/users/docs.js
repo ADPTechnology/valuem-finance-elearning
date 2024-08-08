@@ -8,6 +8,7 @@ $(() => {
     /*-------------- DOCUMENTS MODAL -----------------*/
 
     if ($("#users-table").length) {
+        
         $("html").on("click", ".showDocsParticipant", function () {
             var button = $(this);
             var getDataUrl = button.data("send");

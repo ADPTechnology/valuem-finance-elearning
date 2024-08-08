@@ -990,7 +990,7 @@ $(() => {
                                             icon: "success",
                                             text: data.message,
                                         });
-                                        
+
                                     } else {
                                         Toast.fire({
                                             icon: "error",
@@ -1041,6 +1041,256 @@ $(() => {
                 },
             });
 
+        })
+    }
+
+
+    // * ------------- FILES -------------------
+
+    if ($('#viewFilesChapterModal').length) {
+
+        $('html').on('click', '.showDocsChapter', function () {
+
+            var button = $(this);
+            var getDataUrl = button.data("send");
+            var url = button.data("url");
+            var modal = $("#viewFilesChapterModal");
+
+            $("#storeChapterFileForm").trigger("reset");
+
+            $.ajax({
+                method: "GET",
+                url: getDataUrl,
+                dataType: "JSON",
+                success: function (data) {
+                    // * dibujar datos en el modal
+
+                    let chapterTitle = data.title;
+                    let html = data.html;
+                    let chapterTitleCont = modal.find(
+                        ".modal_files_chapter_title"
+                    );
+
+                    let modalDocsBody = modal.find("#table_chapters_files_container");
+                    chapterTitleCont.html(chapterTitle + ": ");
+                    modalDocsBody.html(html);
+                    $("#storeChapterFileForm").attr("action", url);
+
+                    // * validar la subida del archivo
+
+                    var storeFileForm = $("#storeChapterFileForm").validate({
+                        rules: {
+                            "files[]": {
+                                required: true,
+                            },
+                        },
+                        submitHandler: function (form, event) {
+                            event.preventDefault();
+                            var form = $(form);
+                            var loadSpinner = form.find(".loadSpinner");
+                            // var modal = $("#storeChapterFileForm");
+
+                            loadSpinner.toggleClass("active");
+                            form.find(".btn-save").attr("disabled", "disabled");
+
+                            var formData = new FormData(form[0]);
+
+                            $.ajax({
+                                method: form.attr("method"),
+                                url: form.attr("action"),
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                dataType: "JSON",
+                                success: function (data) {
+                                    if (data.success) {
+
+                                        Toast.fire({
+                                            icon: "success",
+                                            text: data.message,
+                                        })
+
+                                        form.trigger("reset");
+                                        storeFileForm.resetForm();
+                                        modalDocsBody.html(data.html);
+
+                                        var chaptersBox = $(
+                                            "#chapters-list-container"
+                                        );
+
+                                        chaptersBox.html(data.htmlChapter);
+
+                                        let urlTable = $(
+                                            "#section-box-" + data.id
+                                        ).data("table");
+
+                                        var chaptersTableEle = $(
+                                            "#freeCourses-chapters-table"
+                                        );
+
+                                        chapterTable(
+                                            chaptersTableEle,
+                                            DataTableEs,
+                                            urlTable
+                                        );
+
+                                        // modal.modal("hide");
+
+                                    } else {
+                                        Toast.fire({
+                                            icon: "error",
+                                            text: data.message,
+                                        });
+                                    }
+                                },
+                                complete: function (data) {
+                                    form.find(".btn-save").removeAttr(
+                                        "disabled"
+                                    );
+                                    loadSpinner.toggleClass("active");
+                                },
+                                error: function (data) {
+                                    ToastError.fire();
+                                },
+                            });
+                        },
+                    });
+
+                    // * delete
+
+                    $("#table_chapters_files_container").on("click", ".deleteChapterFile", function () {
+
+                        var url = $(this).data("url");
+
+                        Swal.fire({
+                            title: "¿Estás seguro?",
+                            text: "¡Esta acción no podrá ser revertida!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "¡Sí!",
+                            cancelButtonText: "Cancelar",
+                            cancelButtonColor: "#161616",
+                            confirmButtonColor: "#de1a2b",
+                            showLoaderOnConfirm: true,
+                            reverseButtons: true,
+                            preConfirm: async () => {
+                                return new Promise(function (resolve, reject) {
+
+                                    $.ajax({
+                                        type: "DELETE",
+                                        url: url,
+                                        dataType: "JSON",
+                                        success: function (result) {
+
+                                            if (result.success) {
+
+                                                let html = result.html;
+                                                let modalDocsBody = modal.find("#table_chapters_files_container");
+                                                modalDocsBody.html(html);
+
+                                                var chaptersBox = $(
+                                                    "#chapters-list-container"
+                                                );
+
+                                                chaptersBox.html(result.htmlChapter);
+
+                                                let urlTable = $(
+                                                    "#section-box-" + result.id
+                                                ).data("table");
+
+                                                var chaptersTableEle = $(
+                                                    "#freeCourses-chapters-table"
+                                                );
+
+                                                chapterTable(
+                                                    chaptersTableEle,
+                                                    DataTableEs,
+                                                    urlTable
+                                                );
+
+                                            } else {
+                                                Toast.fire({
+                                                    icon: "error",
+                                                    text: result.message,
+                                                });
+                                            }
+                                        },
+                                        error: function (result) {
+                                            // Swal.showValidationMessage(`
+                                            //     Request failed: ${result}
+                                            //   `);
+                                            ToastError.fire();
+                                        },
+                                    });
+                                    setTimeout(function () {
+                                        resolve();
+                                    }, 500);
+                                })
+                            },
+                            allowOutsideClick: () => !Swal.isLoading()
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Toast.fire({
+                                    icon: "success",
+                                    text: "¡Registro eliminado!",
+                                });
+                            }
+                        });
+
+                        // SwalDelete.fire().then(
+                        //     function (e) {
+                        //         if (e.value === true) {
+                        //             $.ajax({
+                        //                 type: "DELETE",
+                        //                 url: url,
+                        //                 dataType: "JSON",
+                        //                 success: function (result) {
+                        //                     if (result.success) {
+                        //                         let html = result.html;
+                        //                         let modalDocsBody =
+                        //                             modal.find("#table_chapters_files_container");
+                        //                             modalDocsBody.html(html);
+
+                        //                         Toast.fire({
+                        //                             icon: "success",
+                        //                             text: result.message,
+                        //                         });
+                        //                     } else {
+                        //                         Toast.fire({
+                        //                             icon: "error",
+                        //                             text: result.message,
+                        //                         });
+                        //                     }
+                        //                 },
+                        //                 complete: function () {
+                        //                     $(".btn-save").removeAttr(
+                        //                         "disabled"
+                        //                     );
+                        //                     // loadSpinner.toggleClass("active");
+                        //                 },
+                        //                 error: function (result) {
+                        //                     ToastError.fire();
+                        //                 },
+                        //             });
+                        //         } else {
+                        //             e.dismiss;
+                        //         }
+                        //     },
+                        //     function (dismiss) {
+                        //         return false;
+                        //     }
+                        // );
+                    });
+
+                },
+                complete: function (data) {
+                    modal.modal("show");
+                },
+                error: function (data) {
+                    // console.log(data)
+                    ToastError.fire();
+                },
+            });
         })
     }
 

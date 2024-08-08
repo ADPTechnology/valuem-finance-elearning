@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\{CourseSection, SectionChapter};
-use App\Services\{FreeCourseService, SectionChapterService};
+use App\Models\{CourseSection, File, SectionChapter};
+use App\Services\{FileService, FreeCourseService, SectionChapterService};
 use Exception;
 use Illuminate\Http\Request;
 
@@ -238,6 +238,99 @@ class AdminSectionChaptersController extends Controller
             'message' => $message,
             'content' => $chapter->content,
             'html' => $html
+        ]);
+    }
+
+    // * ------------ FILES --------------
+
+    public function getFilesData(SectionChapter $chapter)
+    {
+        $chapter->loadFiles();
+        $files = $chapter->files;
+
+        $html = view('admin.free-courses.partials.components._files_chapter_list', compact(
+                'files',
+                'chapter'
+            ))->render();
+
+        return response()->json([
+            'title' => $chapter->title,
+            'html' => $html
+        ]);
+    }
+
+    public function storeFiles(Request $request, SectionChapter $chapter)
+    {
+        $storage = env('FILESYSTEM_DRIVER');
+
+        try {
+            $success = $this->sectionChapterService->storeFiles($request, $chapter, $storage);
+
+            $chapter->loadFiles()->load(['courseSection']);
+            $files = $chapter->files;
+
+            $section = $chapter->courseSection;
+
+            $html = view('admin.free-courses.partials.components._files_chapter_list', compact(
+                    'files',
+                    'chapter'
+                ))->render();
+            $htmlChapter = view('admin.free-courses.partials.chapters-list', compact('section'))->render();
+
+        } catch (Exception $e) {
+            $success = false;
+        }
+
+        $message = getMessageFromSuccess($success, 'stored');
+
+        return response()->json([
+            "success" => $success,
+            "message" => $message,
+            "html" => $html ?? null,
+            "htmlChapter" => $htmlChapter ?? null,
+            "id" => $section->id ?? null
+        ]);
+    }
+
+    public function downloadFile(File $file)
+    {
+        $storage = env('FILESYSTEM_DRIVER');
+
+        if (app(FileService::class)->validateDownload($file, $storage)) {
+            return app(FileService::class)->download($file, $storage);
+        }
+    }
+
+    public function deleteFile(File $file, SectionChapter $chapter)
+    {
+        $storage = env('FILESYSTEM_DRIVER');
+
+        $chapter->loadFiles()->load(['courseSection']);
+
+        try {
+            $success = $this->sectionChapterService->destroyFile($file, $storage);
+            // $participant->loadFilesParticipant();
+            $chapter->loadFiles();
+            $files = $chapter->files;
+            $section = $chapter->courseSection;
+            $html = view('admin.free-courses.partials.components._files_chapter_list', compact(
+                    'files',
+                    'chapter'
+                ))->render();
+            $htmlChapter = view('admin.free-courses.partials.chapters-list', compact('section'))->render();
+
+        } catch (Exception $e) {
+            $success = false;
+        }
+
+        $message = getMessageFromSuccess($success, 'deleted');
+
+        return response()->json([
+            "success" => $success,
+            "message" => $message,
+            "html" => $html ?? null,
+            "htmlChapter" => $htmlChapter ?? null,
+            "id" => $section->id ?? null
         ]);
     }
 }

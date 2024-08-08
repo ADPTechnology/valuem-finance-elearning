@@ -73,8 +73,7 @@ class ParticipantService
                 )
             ) {
                 array_push($success, $file);
-            }
-            ;
+            };
         }
 
         return count($files) == count($success);

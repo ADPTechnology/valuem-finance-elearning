@@ -370,6 +370,7 @@
     @include('admin.free-courses.partials.modals._preview_chapter')
 
     @include('admin.free-courses.partials.modals._view_content_chapter')
+    @include('admin.free-courses.partials.modals._view_files_chapter')
 
     {{-- EXAM --}}
     {{-- @include('admin.free-courses.partials.modals._store_exam')

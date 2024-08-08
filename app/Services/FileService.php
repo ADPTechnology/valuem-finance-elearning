@@ -255,9 +255,4 @@ class FileService
 
         return [$success, $rejected, $found_errors];
     }
-
-
-
-
-
 }

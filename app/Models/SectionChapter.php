@@ -59,4 +59,12 @@ class SectionChapter extends Model
             ]
         );
     }
+
+    public function loadFiles()
+    {
+        return $this->load([
+            'files' => fn ($q) =>
+                $q->where('file_type', 'archivos')
+        ]);
+    }
 }

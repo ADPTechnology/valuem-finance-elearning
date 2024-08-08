@@ -172,9 +172,7 @@ $(() => {
                                                 UpdateInformationForm
                                             )
                                         );
-                                        modal
-                                            .find("textarea[name=content]")
-                                            .empty();
+                                        modal.find("textarea[name=content]").empty();
 
                                         Toast.fire({
                                             icon: "success",

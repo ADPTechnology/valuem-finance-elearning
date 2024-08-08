@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\{CourseSection, SectionChapter};
+use App\Models\{CourseSection, File, SectionChapter};
 use Datatables;
 use Exception;
 use Owenoj\LaravelGetId3\GetId3;
@@ -54,8 +54,8 @@ class SectionChapterService
                         </button>';
 
                 $btn .= '<button data-id="' . $chapter->id . '"
-                            data-send=""
-                            data-url=""
+                            data-send="'. route('admin.freeCourses.chapters.getFilesData', $chapter) .'"
+                            data-url="'. route('admin.freeCourses.chapters.storeFiles', $chapter) .'"
                             data-original-title="edit" class="me-3 edit btn btn-primary btn-sm
                             showDocsChapter">
                             <i class="fa-solid fa-file-lines"></i>
@@ -229,5 +229,45 @@ class SectionChapterService
         return $chapter->update([
             'content' => $request['content']
         ]);
+    }
+
+    public function storeFiles($request, SectionChapter $chapter, $storage)
+    {
+        if ($request->hasFile('files')) {
+
+            $file_type = 'archivos';
+            $category = 'cursoslibres';
+            $belongsTo = 'cursoslibres';
+            $relation = 'one_many';
+
+            $success = [];
+
+            $files = $request->file('files');
+
+            foreach ($files as $file) {
+                if (
+                    app(FileService::class)->store(
+                        $chapter,
+                        $file_type,
+                        $category,
+                        $file,
+                        $storage,
+                        $belongsTo,
+                        $relation
+                    )
+                ) {
+                    array_push($success, $file);
+                };
+            }
+
+            return count($files) == count($success);
+        }
+
+        throw new Exception(config('parameters.exception_message'));
+    }
+
+    public function destroyFile(File $file, $storage)
+    {
+        return app(FileService::class)->destroy($file, $storage);
     }
 }
